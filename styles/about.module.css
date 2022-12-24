@@ -1,0 +1,12 @@
+.main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+}
+
+.wallpaper{
+    width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+}

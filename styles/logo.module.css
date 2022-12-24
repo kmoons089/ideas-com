@@ -1,0 +1,24 @@
+.logo{
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: rgb(82, 82, 82);
+    
+}
+
+.img {
+    height: 50px;
+    width: auto;
+    transform: rotate(-45deg);
+}
+@media (max-width:600px) {
+   
+}
+.loader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
