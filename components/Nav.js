@@ -49,15 +49,18 @@ const Nav = () => {
           <Link href="/about">ABOUT</Link>
         </li>
 
-        <Button
-          className={navStyles.menu}
-          variant="outlined"
-          color="warning"
-          onClick={MenuHandler}
-        >
-          <MenuIcon />
-          MENU
-        </Button>
+        <div className={navStyles.button}>
+          <Button
+            className={navStyles.menu}
+            variant="outlined"
+            color="warning"
+            onClick={MenuHandler}
+          >
+            <MenuIcon />
+            MENU
+          </Button>
+        </div>
+
         <ul className={menu ? navStyles.menuOn : navStyles.menuOff2}>
           <li
             onClick={() => {

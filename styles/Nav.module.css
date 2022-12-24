@@ -20,6 +20,10 @@
   align-items: center;
   justify-content: center;
 }
+.button{
+  position: absolute;
+  right: 10px;
+}
 .menu{
   position: absolute;
   display: flex;
