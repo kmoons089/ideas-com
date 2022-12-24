@@ -2,7 +2,9 @@ import ArticleItem from "./ArticleItem";
 import articleStyles from "../styles/Article.module.css";
 import Footer from "./Footer";
 
-const ArticleList = ({ articles, category }) => {
+import { articles } from "../data";
+
+const ArticleList = ({ category }) => {
   return (
     <div className={articleStyles.category}>
       <div className={articleStyles.grid}>
