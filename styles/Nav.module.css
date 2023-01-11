@@ -22,12 +22,14 @@
 }
 .button{
   position: absolute;
-  right: 10px;
+  top: 2px;
+  right: 0px;
 }
 .menu{
   position: absolute;
   display: flex;
-  right: 10px;
+  top: 2px;
+  right: 0px;
   gap: 5px;
 }
 

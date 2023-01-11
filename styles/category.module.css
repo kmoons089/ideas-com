@@ -25,6 +25,7 @@
     font-family: sans-serif;
     gap: 20px;
     font-weight: bold;
+    color:black;
   }
   .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);

@@ -5,13 +5,19 @@ import HomeScreen2 from "../components/HomeScreen2";
 import Footer from "../components/Footer";
 import Category from "../components/Category";
 
+import Carousel_Component from "../components/Carousel";
+import Home_2nd_para from "../components/Home_2nd_para";
+import Cat_Boot from "../components/Cat_Boot";
+
 export default function Home({ articles }) {
   return (
     <div>
-      <HomeScreen />
-      <HomeScreen2 />
+      <Carousel_Component />
+      <Home_2nd_para />
+      {/* <HomeScreen2 /> */}
       {/* <ArticleList articles={articles} /> */}
       <Category />
+      {/* <Cat_Boot /> */}
       <Footer />
     </div>
   );

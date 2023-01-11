@@ -56,7 +56,6 @@ const Nav = () => {
             color="warning"
             onClick={MenuHandler}
           >
-            <MenuIcon />
             MENU
           </Button>
         </div>

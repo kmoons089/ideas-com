@@ -7,7 +7,7 @@ const Logo = () => {
   return (
     <div className={style.logo}>
       <Image src={logo3} className={style.img} />
-      <h1>WEDONTWANNATHINK</h1>
+      <h4>WEDONTWANNATHINK</h4>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import html from "../public/img/htmllogo.png";
 import java from "../public/img/javalogo.png";
 import pp from "../public/img/pplogo.png";
 import ct from "../public/img/ctlogo.png";
+import Container from "react-bootstrap/Container";
 
 const Category = () => {
   const [category, setCategory] = useState([
@@ -28,8 +29,9 @@ const Category = () => {
   ]);
 
   return (
-    <div className={articleStyles.category}>
-      <h1 className="wow animate__animated animate__fadeInUp">
+    <Container>
+      <br></br>
+      <h1 className="wow animate__animated animate__fadeInUp text-center">
         What is your Project ?
       </h1>
       <div className={CategoryStyle.cards}>
@@ -37,7 +39,7 @@ const Category = () => {
           <Item item={item} key={item.name} />
         ))}
       </div>
-    </div>
+    </Container>
   );
 };
 

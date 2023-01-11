@@ -5,9 +5,9 @@ import "../styles/complex.module.css";
 import React, { useState } from "react";
 import Router from "next/router";
 import { Loader } from "../components/Loader";
-
 import nProgress from "nprogress";
 nProgress.configure({ showSpinner: false });
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);

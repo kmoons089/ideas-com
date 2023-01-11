@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: center;
     background-color: rgb(255, 255, 255);
+    width: 100vw;
 }
 
 .wallpaper{

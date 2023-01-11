@@ -6,6 +6,7 @@ import slide from "../public/img/textSlide.png";
 import java from "../public/img/javabigscreen.png";
 import pp from "../public/img/ppbigscreen.png";
 import hw from "../public/img/hwbgsc.png";
+import Carousel from "react-bootstrap/Carousel";
 
 const BigScreen = ({ category }) => {
   const [img1, setImg1] = useState();

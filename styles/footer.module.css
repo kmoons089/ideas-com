@@ -35,5 +35,13 @@
 @media  (max-width: 736px) {
     .footer{
         grid-template-columns: auto;
+        height:100%;
+    }
+    .column{
+        justify-content: center;
+        align-items: center   ;
+    }
+    .logo{
+        left: 0;
     }
   }
