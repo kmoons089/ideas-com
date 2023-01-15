@@ -1,20 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import img from "../public/img/loginvector.png";
 import { Button } from "react-bootstrap";
-import {
-  MDBContainer,
-  MDBCol,
-  MDBRow,
-  MDBBtn,
-  MDBIcon,
-  MDBInput,
-  MDBCheckbox,
-} from "mdb-react-ui-kit";
+import { MDBContainer, MDBCol, MDBRow, MDBInput } from "mdb-react-ui-kit";
 import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
 import { Form } from "react-bootstrap";
 import { useRouter } from "next/router";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 
 const Register = () => {
   const router = useRouter();
@@ -29,12 +22,25 @@ const Register = () => {
 
     try {
       await signup(data.email, data.password).then(router.push("/review"));
+      console.log("run 555555555555555555555");
     } catch (err) {
-      console.log(err);
+      if ((err.message = "Firebase: Error (auth/invalid-email).")) {
+        alert(
+          "Invalid Email Or Already Used Email Or Too Short Password (Password must includes at least 6 characters)"
+        );
+      }
+      console.log(err.message);
     }
 
     console.log(data);
   };
+
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+      alert("You have registered successfully.Enjoy the new experience.");
+    }
+  }, [user]);
   /* --------------------------------- return --------------------------------- */
   return (
     <>
@@ -42,6 +48,13 @@ const Register = () => {
         <Form>
           <MDBRow>
             <MDBCol col="10" md="6">
+              <div className="d-flex flex-row align-items-center justify-content-center text-danger text-center">
+                <h5>
+                  <WarningAmberIcon sx={{ fontSize: 70 }} />
+                  REGISTER NOW AND ENJOY NEW EXPERIENCE{" "}
+                  <WarningAmberIcon sx={{ fontSize: 70 }} />
+                </h5>
+              </div>
               <Image
                 src={img}
                 className="img-fluid"
@@ -88,7 +101,7 @@ const Register = () => {
                   })
                 }
                 value={data.password}
-                autoComplete="current-password"
+                autoComplete="new-password"
                 size="lg"
               />
 
@@ -97,7 +110,7 @@ const Register = () => {
                   REGISTER
                 </Button>
                 <p className="small fw-bold mt-2 pt-1 mb-2">
-                  Don't have an account?
+                  Already had an account?
                   <Link href="/login" className="link-danger">
                     LOGIN
                   </Link>

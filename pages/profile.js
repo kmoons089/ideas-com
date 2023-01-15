@@ -6,6 +6,7 @@ import { Button, Container } from "react-bootstrap";
 import { Loader } from "../components/Loader";
 import Image from "next/image";
 import pfImage from "../public/img/profileImage.png";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 
 import {
   MDBBtn,
@@ -185,8 +186,17 @@ const profile = () => {
             }}
           ></div> */}
           <Meta title="Login" />
-          <Container className="d-flex align-items-start justify-content-center bg-warning">
-            <div className="row w-100 ">
+          <div
+            className="d-flex align-items-start justify-content-center "
+            style={{
+              minHeight: "100vh",
+              width: "100%",
+              position: "fixed",
+              zIndex: "-1",
+            }}
+          ></div>
+          <Container className="d-flex align-items-start justify-content-center">
+            <div className="row w-100 bg-warning">
               <div className="col-sm-4 d-flex align-items-start justify-content-center">
                 <div className="card w-100   align-items-center m-1">
                   <div class="card-header  bg-dark text-white w-100 text-center">
@@ -218,12 +228,20 @@ const profile = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-sm-8 d-flex align-items-center ">
+              <div
+                className="col-sm-8 d-flex align-items-center "
+                style={{ minHeight: "93vh" }}
+              >
                 <Container
-                  className="d-flex justify-content-center  align-items-center flex-column  w-100 "
-                  style={{ backgroundColor: "white" }}
+                  className=" d-flex align-items-start "
+                  style={{ minHeight: "93vh", backgroundColor: "white" }}
                 >
-                  <PostsList mode="edit" />
+                  <Container
+                    className="d-flex justify-content-center  align-items-center flex-column  w-100 "
+                    style={{ backgroundColor: "white" }}
+                  >
+                    <PostsList mode="edit" />
+                  </Container>
                 </Container>
               </div>
             </div>

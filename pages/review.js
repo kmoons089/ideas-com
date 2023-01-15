@@ -23,6 +23,7 @@ import { useAuth } from "../context/AuthContext";
 import Image from "next/image";
 
 const review = () => {
+  const { user } = useAuth();
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
 

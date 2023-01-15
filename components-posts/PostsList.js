@@ -23,9 +23,11 @@ const PostsList = ({ mode, props }) => {
           setPosts(response._delegate._snapshot.docChanges);
           console.log(response._delegate._snapshot.docChanges);
           if (response._delegate._snapshot.docChanges.length < 1) {
+            console.log("no post");
             setNoPost(true);
           } else {
             setNoPost(false);
+            console.log(" post");
           }
         })
         .then(() => {
@@ -39,6 +41,13 @@ const PostsList = ({ mode, props }) => {
         .then((response) => {
           setPosts(response._delegate._snapshot.docChanges);
           console.log(response._delegate._snapshot.docChanges);
+          if (response._delegate._snapshot.docChanges.length < 1) {
+            console.log("no post");
+            setNoPost(true);
+          } else {
+            setNoPost(false);
+            console.log(" post");
+          }
         })
         .then(() => {
           setLoading(false);

@@ -2,7 +2,7 @@ import Layout from "../components/Layout";
 import "../styles/globals.css";
 import "../styles/Home.module.css";
 import "../styles/complex.module.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import { Loader } from "../components/Loader";
 import nProgress from "nprogress";
@@ -28,6 +28,14 @@ function MyApp({ Component, pageProps }) {
     setLoading(false);
     nProgress.done();
   });
+
+  useEffect(() => {
+    if (noAuthRequired.includes(router.pathname)) {
+      null;
+    } else {
+      console.log("Login require ");
+    }
+  }, []);
 
   return (
     <>

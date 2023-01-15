@@ -38,22 +38,20 @@ const Nav_Boot = () => {
       )}
       <div className="z-3 ">
         <header className="d-flex flex-wrap justify-content-center py-1  border-bottom align-items-center ">
-          <Container className="d-flex">
-            <a
-              style={{ color: "balck" }}
-              onClick={() => {
-                setSideBar(true);
-              }}
-            >
-              <MenuIcon sx={{ fontSize: 40 }} />
-            </a>
-            <a
-              href="/"
-              className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none justify-content-center "
-            >
-              <Logo />
-            </a>
-          </Container>
+          <a
+            style={{ color: "balck" }}
+            onClick={() => {
+              setSideBar(true);
+            }}
+          >
+            <MenuIcon sx={{ fontSize: 40 }} />
+          </a>
+          <a
+            href="/"
+            className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none justify-content-center "
+          >
+            <Logo />
+          </a>
 
           <ul className="nav nav-pills">
             {/* <li className="nav-item">

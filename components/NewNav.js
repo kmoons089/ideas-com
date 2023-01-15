@@ -9,6 +9,7 @@ const NewNav = () => {
   const [java, setJava] = useState(false);
   const [pp, setPp] = useState(false);
   const [hw, setHw] = useState(false);
+  const [review, setReview] = useState(false);
   const [sideBar, setSideBar] = useState(false);
 
   const route = useRouter();
@@ -22,6 +23,7 @@ const NewNav = () => {
       setJava(false);
       setPp(false);
       setHw(false);
+      setReview(false);
     } else if (p == "/about") {
       setHome(false);
       setAbout(true);
@@ -29,6 +31,7 @@ const NewNav = () => {
       setJava(false);
       setPp(false);
       setHw(false);
+      setReview(false);
     } else if (p == "/html") {
       setHome(false);
       setAbout(false);
@@ -36,6 +39,7 @@ const NewNav = () => {
       setJava(false);
       setPp(false);
       setHw(false);
+      setReview(false);
     } else if (p == "/java") {
       setHome(false);
       setAbout(false);
@@ -43,6 +47,7 @@ const NewNav = () => {
       setJava(true);
       setPp(false);
       setHw(false);
+      setReview(false);
     } else if (p == "/pp") {
       setHome(false);
       setAbout(false);
@@ -50,6 +55,7 @@ const NewNav = () => {
       setJava(false);
       setPp(true);
       setHw(false);
+      setReview(false);
     } else if (p == "/hw") {
       setHome(false);
       setAbout(false);
@@ -57,6 +63,15 @@ const NewNav = () => {
       setJava(false);
       setPp(false);
       setHw(true);
+      setReview(false);
+    } else if (p == "/review") {
+      setHome(false);
+      setAbout(false);
+      setHtml(false);
+      setJava(false);
+      setPp(false);
+      setHw(false);
+      setReview(true);
     } else {
       setHome(false);
       setAbout(false);
@@ -64,8 +79,9 @@ const NewNav = () => {
       setJava(false);
       setPp(false);
       setHw(false);
+      setReview(false);
     }
-  }, []);
+  }, [route]);
 
   return (
     <>
@@ -75,7 +91,7 @@ const NewNav = () => {
       >
         <a
           href="/"
-          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none bg-light p-1 pe-3 mt-5"
+          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none bg-light p-1 pe-1 mt-5"
         >
           <Logo />
         </a>
@@ -128,6 +144,14 @@ const NewNav = () => {
               class={hw ? "nav-link active" : "nav-link text-white"}
             >
               Hardware
+            </a>
+          </li>
+          <li>
+            <a
+              href="/review"
+              class={review ? "nav-link active" : "nav-link text-white"}
+            >
+              Posts
             </a>
           </li>
         </ul>
