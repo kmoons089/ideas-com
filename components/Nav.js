@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import navStyles from "../styles/Nav.module.css";
 import Button from "@mui/material/Button";
-import MenuIcon from "@mui/icons-material/Menu";
+
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
 import ExtensionIcon from "@mui/icons-material/Extension";

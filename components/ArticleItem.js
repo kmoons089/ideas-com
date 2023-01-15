@@ -16,6 +16,7 @@ const ArticleItem = ({ article }) => {
         <Image
           className="wow animate__animated animate__fadeInUp "
           src={article.img}
+          alt=""
         />
       </a>
       <script src="./wow.min.js"></script>

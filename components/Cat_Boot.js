@@ -5,10 +5,6 @@ import Col from "react-bootstrap/Col";
 import Ratio from "react-bootstrap/Ratio";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import html from "../public/img/htmllogo.png";
-import java from "../public/img/javalogo.png";
-import pp from "../public/img/pplogo.png";
-import ct from "../public/img/ctlogo.png";
 
 const Cat_Boot = () => {
   return (

@@ -9,7 +9,15 @@ import nProgress from "nprogress";
 nProgress.configure({ showSpinner: false });
 import "bootstrap/dist/css/bootstrap.min.css";
 
+/* ----------------------------- Authentication ----------------------------- */
+import { AuthContextProvider } from "../context/AuthContext";
+import { useRouter } from "next/router";
+import ProtectedRoute from "../components/ProtectedRoute";
+
+const noAuthRequired = ["/", "/login", "/register"];
+
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   Router.events.on("routeChangeStart", (url) => {
@@ -23,16 +31,24 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      {loading && (
-        <Layout>
-          <Loader />
-        </Layout>
-      )}
-      {!loading && (
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      )}
+      <AuthContextProvider>
+        {loading && (
+          <Layout>
+            <Loader />
+          </Layout>
+        )}
+        {!loading && (
+          <Layout>
+            {noAuthRequired.includes(router.pathname) ? (
+              <Component {...pageProps} />
+            ) : (
+              <ProtectedRoute>
+                <Component {...pageProps} />
+              </ProtectedRoute>
+            )}
+          </Layout>
+        )}
+      </AuthContextProvider>
     </>
   );
 }

@@ -14,7 +14,7 @@ const Item = ({ item }) => {
         console.log("click");
       }}
     >
-      <Image src={item.img} className={style.categoryItem} />
+      <Image src={item.img} className={style.categoryItem} alt="" />
       <p>{item.name}</p>
     </a>
   );

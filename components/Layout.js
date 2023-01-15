@@ -3,6 +3,7 @@ import Meta from "./Meta";
 
 import styles from "../styles/Layout.module.css";
 import Nav_Boot from "./Nav_Boot";
+import NewNav from "./NewNav";
 
 const Layout = ({ children }) => {
   return (

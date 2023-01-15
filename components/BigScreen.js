@@ -29,8 +29,16 @@ const BigScreen = ({ category }) => {
   }, []);
   return (
     <div className={style.homeScreen}>
-      <Image className="animate__animated animate__fadeInLeft" src={img1} />
-      <Image className="animate__animated animate__fadeInRight" src={img2} />
+      <Image
+        className="animate__animated animate__fadeInLeft"
+        src={img1}
+        alt=""
+      />
+      <Image
+        className="animate__animated animate__fadeInRight"
+        src={img2}
+        alt=""
+      />
     </div>
   );
 };

@@ -5,7 +5,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  
+ 
 }
 
 a {
@@ -17,6 +17,15 @@ a {
   box-sizing: border-box;
  
 }
+/* * {
+  outline: 1px solid #f00 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+} */
+
+/* --------------------------------- sidebar -------------------------------- */
+
+
 
 ul{
   list-style: none;
@@ -26,6 +35,10 @@ ul{
   width: 90%;
   background-color: black;
 }
+.overflow-hide{
+  overflow-x: hidden;
+}
+
 
 /*!
  * animate.css - https://animate.style/
