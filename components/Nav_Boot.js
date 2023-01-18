@@ -87,18 +87,29 @@ const Nav_Boot = () => {
                 </div>
               ) : (
                 <>
-                  <a
-                    href="/register"
-                    className="btn btn-light ms-3 mt-1 align-items-center justify-content-center"
-                  >
-                    <h5>Signup</h5>
-                  </a>
-                  <a
-                    href="/login"
-                    className="btn btn-light ms-3 mt-1 align-items-center justify-content-center"
-                  >
-                    <h5>Login</h5>
-                  </a>
+                  <div className="d-flex">
+                    <a
+                      href="/register"
+                      className="d-flex btn btn-light ms-3 mt-1 align-items-center justify-content-center"
+                    >
+                      <h5>Signup</h5>
+                    </a>
+                    <a
+                      href="/login"
+                      className="d-flex btn btn-light ms-3 mt-1 align-items-center justify-content-center"
+                    >
+                      <h5>Login</h5>
+                    </a>
+                    <a
+                      className="d-flex btn text-light ms-3 align-items-center justify-content-center"
+                      style={{ color: "balck" }}
+                      onClick={() => {
+                        setSideBar(true);
+                      }}
+                    >
+                      <MenuIcon sx={{ fontSize: 40 }} />
+                    </a>
+                  </div>
                 </>
               )}
             </li>

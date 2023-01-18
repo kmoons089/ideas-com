@@ -1,3 +1,6 @@
+import EmailIcon from "@mui/icons-material/Email";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 const Footer = () => {
   return (
     <>
@@ -48,16 +51,16 @@ const Footer = () => {
               <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                 <h6 className="text-uppercase fw-bold mb-4">Contact</h6>
                 <p>
-                  <i className="fas fa-home me-3 text-secondary"></i> Kan Lan,
-                  Taungoo
+                  <LocationOnIcon />
+                  Kan Lan, Taungoo
                 </p>
                 <p>
-                  <i className="fas fa-envelope me-3 text-secondary"></i>
+                  <EmailIcon />
                   wedontwannathink@gmail.com
                 </p>
                 <p>
-                  <i className="fas fa-phone me-3 text-secondary"></i>09
-                  123456789
+                  <LocalPhoneIcon />
+                  09 123456789
                 </p>
               </div>
               <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
