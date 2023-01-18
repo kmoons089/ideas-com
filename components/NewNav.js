@@ -86,87 +86,87 @@ const NewNav = () => {
   return (
     <>
       <div
-        class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark position-fixed "
-        style={{ width: "380px", height: "100vh", zIndex: "3" }}
+        className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark position-fixed "
+        style={{ width: "380px", height: "100vh", zIndex: "3", right: 0 }}
       >
         <a
           href="/"
-          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none bg-light p-1 pe-1 mt-5"
+          className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none  p-1 pe-1 mt-5"
         >
           <Logo />
         </a>
         <hr />
-        <ul class="nav nav-pills flex-column mb-auto">
-          <li class="nav-item">
+        <ul className="nav nav-pills flex-column mb-auto">
+          <li className="nav-item bghover">
             <a
               href="/"
-              class={home ? "nav-link active" : "nav-link text-white"}
+              className={home ? "nav-link active" : "nav-link text-white "}
               aria-current="page"
             >
               Home
             </a>
           </li>
-          <li>
+          <li className="nav-item bghover">
             <a
               href="/about"
-              class={about ? "nav-link active" : "nav-link text-white"}
+              className={about ? "nav-link active" : "nav-link text-white"}
             >
               About
             </a>
           </li>
-          <li>
+          <li className="nav-item bghover">
             <a
               href="/html"
-              class={html ? "nav-link active" : "nav-link text-white"}
+              className={html ? "nav-link active" : "nav-link text-white"}
             >
               Html
             </a>
           </li>
-          <li>
+          <li className="nav-item bghover">
             <a
               href="/java"
-              class={java ? "nav-link active" : "nav-link text-white"}
+              className={java ? "nav-link active" : "nav-link text-white"}
             >
               Java
             </a>
           </li>
-          <li>
+          <li className="nav-item bghover">
             <a
               href="/pp"
-              class={pp ? "nav-link active" : "nav-link text-white"}
+              className={pp ? "nav-link active" : "nav-link text-white"}
             >
               PowerPoint
             </a>
           </li>
-          <li>
+          <li className="nav-item bghover">
             <a
               href="/hw"
-              class={hw ? "nav-link active" : "nav-link text-white"}
+              className={hw ? "nav-link active" : "nav-link text-white"}
             >
               Hardware
             </a>
           </li>
-          <li>
+          <li className="nav-item bghover">
             <a
               href="/review"
-              class={review ? "nav-link active" : "nav-link text-white"}
+              className={review ? "nav-link active" : "nav-link text-white"}
             >
               Posts
             </a>
           </li>
         </ul>
         <hr />
-        <div class="dropdown">
+        <div className="dropdown">
           <a
             href="/profile"
-            class="d-flex align-items-center text-white text-decoration-none "
+            className="d-flex align-items-center text-white text-decoration-none "
           >
             <img
               src="https://freesvg.org/img/abstract-user-flat-4.png"
               alt=""
               width="32"
               height="32"
-              class="rounded-circle me-2"
+              className="rounded-circle me-2"
             />
             <strong>Profile</strong>
           </a>

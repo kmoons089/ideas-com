@@ -8,31 +8,35 @@ import { useAuth } from "../context/AuthContext";
 import { Form } from "react-bootstrap";
 import { useRouter } from "next/router";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import FirestoreService from "../utils/FirestoreService";
 
 const Register = () => {
   const router = useRouter();
   const { user, signup } = useAuth();
   const [data, setData] = useState({
-    email: "",
+    owner_email: "",
     password: "",
+    displayName: "",
   });
   /* ------------------------------ handleSignup ------------------------------ */
   const handleSignup = async (e) => {
     e.preventDefault();
 
     try {
-      await signup(data.email, data.password).then(router.push("/review"));
-      console.log("run 555555555555555555555");
+      await signup(data.owner_email, data.password).then(() => {
+        router.push("/review");
+        FirestoreService.addProfileData(data).then(
+          console.log("Profile data added : ")
+        );
+      });
     } catch (err) {
       if ((err.message = "Firebase: Error (auth/invalid-email).")) {
         alert(
           "Invalid Email Or Already Used Email Or Too Short Password (Password must includes at least 6 characters)"
         );
       }
-      console.log(err.message);
+      console.log(err);
     }
-
-    console.log(data);
   };
 
   useEffect(() => {
@@ -71,6 +75,21 @@ const Register = () => {
               </div>
 
               <div className="divider d-flex align-items-center my-4"></div>
+              <MDBInput
+                wrapperClass="mb-4"
+                label="Display name"
+                type="text"
+                placeholder="Enter nickname "
+                required
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    displayName: e.target.value,
+                  })
+                }
+                value={data.displayName}
+                size="lg"
+              />
 
               <MDBInput
                 wrapperClass="mb-4"
@@ -81,7 +100,7 @@ const Register = () => {
                 onChange={(e) =>
                   setData({
                     ...data,
-                    email: e.target.value,
+                    owner_email: e.target.value,
                   })
                 }
                 value={data.email}

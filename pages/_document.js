@@ -12,6 +12,14 @@ class MyDocument extends Document {
             crossOrigin="anonymous"
             referrerPolicy="no-referrer"
           />
+          <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          ></link>
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          ></link>
         </Head>
         <body>
           <Main />
@@ -29,6 +37,11 @@ class MyDocument extends Document {
           <script
             src="https://cdn.jsdelivr.net/npm/react-bootstrap@next/dist/react-bootstrap.min.js"
             crossOrigin="true"
+          ></script>
+
+          <script
+            src="https://kit.fontawesome.com/a076d05399.js"
+            crossorigin="anonymous"
           ></script>
 
           <script>var Alert = ReactBootstrap.Alert;</script>

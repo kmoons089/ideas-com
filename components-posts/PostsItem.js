@@ -1,17 +1,3 @@
-import Link from "next/link";
-import articleStyles from "../styles2/Article.module.css";
-
-// const ArticleItem = ({ article }) => {
-//   return (
-//     <div>
-//       <a className={articleStyles.card}>
-//         <h3>|{article.doc.data.value.mapValue.fields.caption.stringValue}|</h3>
-//       </a>
-//     </div>
-//   );
-// };
-
-// export default ArticleItem;
 import React, { useEffect, useState } from "react";
 import { Loader } from "./Loader";
 import {
@@ -36,6 +22,9 @@ import { Container } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import FirestoreService from "../utils/FirestoreService";
+import CreatePostForm from "../components/RatingStar_read";
+import CreatePost from "../components/CreatePost";
+import RatingStar_read from "../components/RatingStar_read";
 
 export default function ArticleItem({ article, mode, props }) {
   const useAsyncState = (initialState) => {
@@ -53,11 +42,11 @@ export default function ArticleItem({ article, mode, props }) {
 
     return [state, asyncSetState];
   };
-
+  const [stars, setStars] = useState("0");
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
-  const [editbtnLoading, setEditBtnLoading] = useState(false);
+  const [profileName, setProfileName] = useState("");
   const [data, setData] = useAsyncState({
     caption: "",
     body: "",
@@ -65,41 +54,12 @@ export default function ArticleItem({ article, mode, props }) {
     stars: "0",
     createdAt: 0,
   });
-  let date = new Date();
 
   const [varyingModal, setVaryingModal] = useState(false);
   const auth = useAuth();
   const [currentPostId, setCurrentPostId] = useState(
     article.doc.key.path.segments[article.doc.key.path.segments.length - 1]
   );
-  // const [currentPost, setCurrentPost] = useState({
-  //   caption: article.doc.data.value.mapValue.fields.caption.stringValue,
-  //   body: article.doc.data.value.mapValue.fields.body.stringValue,
-  //   stars: article.doc.data.value.mapValue.fields.stars.stringValue,
-  // });
-  // const [edit, setEdit] = useState(false);
-
-  /* ---------------------------------- edit ---------------------------------- */
-  const handleEdit = (e) => {
-    console.log(data.stars);
-    FirestoreService.updatePost(
-      currentPostId,
-      data.caption,
-      data.body,
-      data.owner_email,
-      data.stars
-    )
-      .then(() => {
-        window.location.reload(false);
-        setCurrentPostId("");
-        setData({ caption: "", body: "", stars: "0" });
-        setEditBtnLoading(false);
-        handleModal();
-      })
-      .catch((e) => {
-        console.log("Error occured: " + e.message);
-      });
-  };
 
   /* --------------------------------- delete --------------------------------- */
   const handleDelete = () => {
@@ -121,103 +81,37 @@ export default function ArticleItem({ article, mode, props }) {
     setVaryingModal(!varyingModal);
   };
 
-  /* -------------------------------- useEffect ------------------------------- */
-  // useEffect(async () => {
-  //   // const date = new Date();
-  //   // const seconds = Math.floor(date.getTime() / 1000);
-  //   // setData(currentPost);
-  //   // setData({ ...data, createdAt: seconds, owner_email: auth.user.email });
-  // }, []);
+  useEffect(() => {
+    console.log(
+      "owner email : " +
+        article.doc.data.value.mapValue.fields.owner_email.stringValue
+    );
+    const email =
+      article.doc.data.value.mapValue.fields.owner_email.stringValue;
+    FirestoreService.getProfileInfo(email).then((response) => {
+      console.log(response._delegate._snapshot.docChanges);
+      setProfileName(
+        response._delegate._snapshot.docChanges[0].doc.data.value.mapValue
+          .fields.displayName.stringValue
+      );
+    });
+  }, []);
+
   return (
     <>
       {openModal && !loading && (
         <>
-          <MDBModal
-            staticBackdrop
-            show={varyingModal}
-            setShow={setVaryingModal}
-            tabIndex="-1"
-          >
-            <MDBModalDialog>
-              <MDBModalContent>
-                <MDBModalHeader>
-                  <MDBModalTitle>Create a Review</MDBModalTitle>
-                </MDBModalHeader>
-                <MDBModalBody>
-                  <form>
-                    <div className="mb-3">
-                      <MDBInput
-                        labelClass="col-form-label"
-                        label="Caption :"
-                        required
-                        onChange={(e) =>
-                          setData({
-                            ...data,
-                            caption: e.target.value,
-                          })
-                        }
-                        value={data.caption}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <MDBTextArea
-                        labelClass="col-form-label"
-                        label="Message :"
-                        required
-                        onChange={(e) =>
-                          setData({
-                            ...data,
-                            body: e.target.value,
-                          })
-                        }
-                        value={data.body}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <MDBInput
-                        labelClass="col-form-label"
-                        label="Stars :"
-                        required
-                        onChange={(e) =>
-                          setData({
-                            ...data,
-                            stars: e.target.value,
-                          })
-                        }
-                        value={data.stars}
-                      />
-                    </div>
-                  </form>
-                </MDBModalBody>
-                <MDBModalFooter>
-                  <Button color="secondary" onClick={handleModal}>
-                    Close
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setEditBtnLoading(true);
-                      console.log(data);
-                      handleEdit();
-                    }}
-                  >
-                    {editbtnLoading ? (
-                      <>
-                        <MDBSpinner
-                          size="sm"
-                          role="status"
-                          tag="span"
-                          className="me-2"
-                        />
-                        Loading...
-                      </>
-                    ) : (
-                      <>POST</>
-                    )}
-                  </Button>
-                </MDBModalFooter>
-              </MDBModalContent>
-            </MDBModalDialog>
-          </MDBModal>
+          <CreatePost
+            varyingModal={varyingModal}
+            handleModal={handleModal}
+            mode="edit"
+            dataForEdit={data}
+            currentPostIdForEdit={
+              article.doc.key.path.segments[
+                article.doc.key.path.segments.length - 1
+              ]
+            }
+          />
         </>
       )}
       <Container className="d-flex flex-column align-items-center justify-content-center w-100 mt-3 ">
@@ -234,11 +128,11 @@ export default function ArticleItem({ article, mode, props }) {
                         article.doc.key.path.segments.length - 1
                       ]
                     );
-
                     await setData({
-                      caption:
-                        article.doc.data.value.mapValue.fields.caption
-                          .stringValue,
+                      id: article.doc.key.path.segments[
+                        article.doc.key.path.segments.length - 1
+                      ],
+
                       body: article.doc.data.value.mapValue.fields.body
                         .stringValue,
                       stars:
@@ -246,7 +140,7 @@ export default function ArticleItem({ article, mode, props }) {
                           .stringValue,
                       owner_email: auth.user.email,
                     });
-                    console.log(data);
+
                     handleModal();
                   }}
                 >
@@ -282,25 +176,21 @@ export default function ArticleItem({ article, mode, props }) {
           className="w-100 shadow-sm  rounded"
         >
           <MDBCardHeader>
-            {" "}
-            Posted by -
-            {article.doc.data.value.mapValue.fields.owner_email.stringValue}
+            <h4>{profileName}</h4>
+            <p>
+              {article.doc.data.value.mapValue.fields.owner_email.stringValue}
+            </p>
           </MDBCardHeader>
           <MDBCardBody>
             <MDBCardTitle>
-              {" "}
-              {article.doc.data.value.mapValue.fields.caption.stringValue}
+              {article.doc.data.value.mapValue.fields.body.stringValue}
             </MDBCardTitle>
-            <MDBCardText>
-              {" "}
-              Rating Stars -
-              {article.doc.data.value.mapValue.fields.stars.stringValue}
-            </MDBCardText>
-            <MDBCardText>
-              <small>
-                {article.doc.data.value.mapValue.fields.body.stringValue}
-              </small>
-            </MDBCardText>
+
+            <RatingStar_read
+              starcount={
+                article.doc.data.value.mapValue.fields.stars.stringValue
+              }
+            />
           </MDBCardBody>
         </MDBCard>
       </Container>

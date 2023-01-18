@@ -22,7 +22,7 @@ const Nav_Boot = () => {
               style={{
                 color: "white",
                 padding: "3px",
-                marginLeft: "330px",
+                right: "0",
                 position: "fixed",
                 backgroundColor: "#212529",
                 zIndex: "3",
@@ -37,71 +37,35 @@ const Nav_Boot = () => {
         </>
       )}
       <div className="z-3 ">
-        <header className="d-flex flex-wrap justify-content-center py-1  border-bottom align-items-center ">
-          <a
-            style={{ color: "balck" }}
-            onClick={() => {
-              setSideBar(true);
-            }}
-          >
-            <MenuIcon sx={{ fontSize: 40 }} />
-          </a>
+        <header
+          className="d-flex flex-wrap justify-content-center py-1  border-bottom align-items-center bg-dark"
+          style={{}}
+        >
           <a
             href="/"
-            className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none justify-content-center "
+            className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none justify-content-center  rounded "
           >
             <Logo />
           </a>
 
           <ul className="nav nav-pills">
-            {/* <li className="nav-item">
-              <a
-                href="/"
-                className="btn btn-dark  ms-3 mt-1"
-                aria-current="page"
-              >
-                <h5>Home</h5>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="/about" className="btn btn-dark  ms-3 mt-1">
-                <h5>About</h5>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="/html" className="btn btn-dark  ms-3 mt-1">
-                <h5>Html</h5>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="/java" className="btn btn-dark  ms-3 mt-1">
-                <h5>Java</h5>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="/pp" className="btn btn-dark  ms-3 mt-1">
-                <h5>PowerPoint</h5>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="/hw" className="btn btn-dark ms-3 mt-1">
-                <h5>Hardware</h5>
-              </a>
-            </li> */}
             <li className="nav-item">
               {user ? (
                 <div className="d-flex">
-                  <a href="/profile" className="btn btn-light ms-3 mt-1 d-flex">
+                  <a
+                    href="/profile"
+                    className="btn btn-light ms-3 mt-1 d-flex align-items-center justify-content-center"
+                  >
                     <img
                       src="https://freesvg.org/img/abstract-user-flat-4.png"
                       alt=""
                       width="32"
                       height="32"
-                      class="rounded-circle me-2 me-2"
+                      className="rounded-circle me-2 me-2"
                     />
                     <h5>Profile</h5>
                   </a>
-                  <a className="btn btn-dark ms-3 mt-1">
+                  <a className="btn btn-dark ms-3 mt-1 d-flex align-items-center justify-content-center text-light">
                     <h5
                       onClick={() => {
                         logout();
@@ -111,13 +75,28 @@ const Nav_Boot = () => {
                       Logout
                     </h5>
                   </a>
+                  <a
+                    className="btn text-light ms-3 mt-1 d-flex"
+                    style={{ color: "balck" }}
+                    onClick={() => {
+                      setSideBar(true);
+                    }}
+                  >
+                    <MenuIcon sx={{ fontSize: 40 }} />
+                  </a>
                 </div>
               ) : (
                 <>
-                  <a href="/register" className="btn btn-light ms-3 mt-1">
+                  <a
+                    href="/register"
+                    className="btn btn-light ms-3 mt-1 align-items-center justify-content-center"
+                  >
                     <h5>Signup</h5>
                   </a>
-                  <a href="/login" className="btn btn-light ms-3 mt-1">
+                  <a
+                    href="/login"
+                    className="btn btn-light ms-3 mt-1 align-items-center justify-content-center"
+                  >
                     <h5>Login</h5>
                   </a>
                 </>

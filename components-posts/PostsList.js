@@ -76,7 +76,7 @@ const PostsList = ({ mode, props }) => {
             </>
           ) : (
             <>
-              <div className="d-flex w-100 ">
+              <div className="d-flex w-100">
                 <Container className="d-flex w-100 flex-column ">
                   {posts.map((article, index) => (
                     <PostItem article={article} mode={mode} key={index} />

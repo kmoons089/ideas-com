@@ -1,67 +1,99 @@
-import footerStyle from "../styles/footer.module.css";
-import Logo from "./Logo";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Ratio from "react-bootstrap/Ratio";
-
 const Footer = () => {
   return (
     <>
-      <div className="bg-warning w-100 mt-5 z-5">
-        <div className="container ">
-          <footer className="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5  border-top">
-            <div className="col mb-3">
-              <a
-                href="/"
-                className="d-flex align-items-center mb-3 link-dark text-decoration-none"
-              >
-                <div
-                  style={{
-                    backgroundColor: "white",
-                    padding: "10px",
-                    borderRadius: "8px",
-                  }}
-                >
-                  <Logo />
-                </div>
-              </a>
-              <p>&copy; 2023</p>
-            </div>
+      <footer className="text-center text-lg-start bg-white text-muted">
+        <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+          <div className="me-5 d-none d-lg-block"></div>
+        </section>
 
-            <div className="col mb-3"></div>
+        <section className="">
+          <div className="container text-center text-md-start mt-5">
+            <div className="row mt-3">
+              <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                <h6 className="text-uppercase fw-bold mb-4">
+                  <i className="fas fa-gem me-3 text-secondary"></i>
+                  WEDONTWANNATHINK
+                </h6>
+                <p>
+                  The best and most beautiful things in the world cannot be seen
+                  or even touched — they must be felt with the heart. -Helen
+                  Keller
+                </p>
+              </div>
 
-            <div className="col mb-3">
-              <h5>CONTACT</h5>
-              <ul className="nav flex-column">
-                <li>09 123456789</li>
-                <li>abdcef@gmail.com</li>
-                <li>Bo Tauk Road , Bago</li>
-                <li>Mon - Sun 24/7 thinkin da bout u</li>
-              </ul>
-            </div>
+              <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                <h6 className="text-uppercase fw-bold mb-4">Projects</h6>
+                <p>
+                  <a href="/html" className="text-reset">
+                    Html
+                  </a>
+                </p>
+                <p>
+                  <a href="/java" className="text-reset">
+                    Java
+                  </a>
+                </p>
+                <p>
+                  <a href="/pp" className="text-reset">
+                    PowerPoint
+                  </a>
+                </p>
+                <p>
+                  <a href="/hw" className="text-reset">
+                    Hardware
+                  </a>
+                </p>
+              </div>
 
-            <div className="col mb-3">
-              <h5> SERVICES</h5>
-              <ul className="nav flex-column">
-                <li>You can call us to help your project</li>
-                <li>First customer 20% discount</li>
-                <li>You need to give us money even if you are nyi ma lay.</li>
-              </ul>
+              <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                <h6 className="text-uppercase fw-bold mb-4">Contact</h6>
+                <p>
+                  <i className="fas fa-home me-3 text-secondary"></i> Kan Lan,
+                  Taungoo
+                </p>
+                <p>
+                  <i className="fas fa-envelope me-3 text-secondary"></i>
+                  wedontwannathink@gmail.com
+                </p>
+                <p>
+                  <i className="fas fa-phone me-3 text-secondary"></i>09
+                  123456789
+                </p>
+              </div>
+              <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                <h6 className="text-uppercase fw-bold mb-4">Developers</h6>
+                <p>
+                  <a href="#!" className="text-reset">
+                    Kyaw Gyi
+                  </a>
+                </p>
+                <p>
+                  <a href="#!" className="text-reset">
+                    Aung Gyi
+                  </a>
+                </p>
+                <p>
+                  <a href="#!" className="text-reset">
+                    Win Mart
+                  </a>
+                </p>
+                <p>
+                  <a href="#!" className="text-reset">
+                    Cow Gyi
+                  </a>
+                </p>
+              </div>
             </div>
+          </div>
+        </section>
 
-            <div className="col mb-3">
-              <h5>DEVELOPERS</h5>
-              <ul className="nav flex-column">
-                <li>Kyaw Gyi</li>
-                <li>Aung Gyi</li>
-                <li>Win Naing</li>
-                <li>K MOON S</li>
-              </ul>
-            </div>
-          </footer>
+        <div className="text-center p-4">
+          © 2023 Copyright:
+          <a className="text-reset fw-bold" href="https://wedontwannathink.com">
+            wedontwannathink.com
+          </a>
         </div>
-      </div>
+      </footer>
     </>
   );
 };

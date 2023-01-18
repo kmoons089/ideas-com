@@ -1,38 +1,19 @@
-import Meta from "../components/Meta";
 import React, { useEffect, useState } from "react";
-
 import PostsList from "../components-posts/PostsList";
 import { Button, Container } from "react-bootstrap";
 import { Loader } from "../components/Loader";
 import Image from "next/image";
 import pfImage from "../public/img/profileImage.png";
-import WarningAmberIcon from "@mui/icons-material/WarningAmber";
-
-import {
-  MDBBtn,
-  MDBModal,
-  MDBModalDialog,
-  MDBModalContent,
-  MDBModalHeader,
-  MDBModalTitle,
-  MDBModalBody,
-  MDBModalFooter,
-  MDBTextArea,
-  MDBInput,
-  MDBSpinner,
-  MDBCard,
-  MDBCardImage,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-} from "mdb-react-ui-kit";
 import { db } from "../utils/firestore";
 import { useAuth } from "../context/AuthContext";
+import CreatePost from "../components/CreatePost";
+import { useRouter } from "next/router";
+import FirestoreService from "../utils/FirestoreService";
 
 const profile = () => {
+  const route = useRouter();
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const [data, setData] = useState({
     caption: "",
     body: "",
@@ -40,12 +21,19 @@ const profile = () => {
     stars: "0",
     createdAt: 0,
   });
-  let date = new Date();
-
   const [varyingModal, setVaryingModal] = useState(false);
   const auth = useAuth();
-  const [currentPostId, setCurrentId] = useState();
-  const [currentPost, setCurrentPost] = useState();
+  const [profileName, setProfileName] = useState("");
+
+  /* ------------------------- for rating stars review ------------------------ */
+  function onValueChange(e) {
+    setStars(e.target.value);
+    setData({
+      ...data,
+      stars: e.target.value,
+    });
+    console.log(e.target.value);
+  }
 
   /* ------------------------------- handleModal ------------------------------ */
   const handleModal = () => {
@@ -76,97 +64,24 @@ const profile = () => {
   /* ---------------------------------- edit ---------------------------------- */
 
   useEffect(() => {
-    console.log(auth.user.email);
-    const date = new Date();
-    const seconds = Math.floor(date.getTime() / 1000);
-
-    setData({
-      ...data,
-      owner_email: auth.user.email,
-      createdAt: seconds,
+    FirestoreService.getProfileInfo(auth.user.email).then((response) => {
+      setProfileName(
+        response._delegate._snapshot.docChanges[0].doc.data.value.mapValue
+          .fields.displayName.stringValue
+      );
     });
-  }, [loading]);
+  }, []);
 
   return (
     <>
       {openModal && !loading && (
         <>
-          <MDBModal
-            staticBackdrop
-            show={varyingModal}
-            setShow={setVaryingModal}
-            tabIndex="-1"
-          >
-            <MDBModalDialog>
-              <MDBModalContent>
-                <MDBModalHeader>
-                  <MDBModalTitle>Create a Review</MDBModalTitle>
-                </MDBModalHeader>
-                <MDBModalBody>
-                  <form>
-                    <div className="mb-3">
-                      <MDBInput
-                        labelClass="col-form-label"
-                        label="Caption :"
-                        required
-                        onChange={(e) =>
-                          setData({
-                            ...data,
-                            caption: e.target.value,
-                          })
-                        }
-                        value={data.caption}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <MDBTextArea
-                        labelClass="col-form-label"
-                        label="Message :"
-                        required
-                        onChange={(e) =>
-                          setData({
-                            ...data,
-                            body: e.target.value,
-                          })
-                        }
-                        value={data.body}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <MDBInput
-                        labelClass="col-form-label"
-                        label="Stars :"
-                        required
-                        onChange={(e) =>
-                          setData({
-                            ...data,
-                            stars: e.target.value,
-                          })
-                        }
-                        value={data.stars}
-                      />
-                    </div>
-                  </form>
-                </MDBModalBody>
-                <MDBModalFooter>
-                  <Button color="secondary" onClick={handleModal}>
-                    Close
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setData({
-                        ...data,
-                        createdAt: Math.floor(date.getTime() / 1000),
-                      });
-                      handlePost();
-                    }}
-                  >
-                    Post
-                  </Button>
-                </MDBModalFooter>
-              </MDBModalContent>
-            </MDBModalDialog>
-          </MDBModal>
+          <CreatePost
+            varyingModal={varyingModal}
+            handleModal={handleModal}
+            mode="add"
+            currentPostIdForEdit=""
+          />
         </>
       )}
       {loading ? (
@@ -175,17 +90,6 @@ const profile = () => {
         </>
       ) : (
         <>
-          {/* <div
-            style={{
-              backgroundColor: "#e0f8fb",
-              width: "100%",
-              height: "100vh",
-              position: "fixed",
-              top: "0",
-              zIndex: -3,
-            }}
-          ></div> */}
-          <Meta title="Login" />
           <div
             className="d-flex align-items-start justify-content-center "
             style={{
@@ -196,12 +100,13 @@ const profile = () => {
             }}
           ></div>
           <Container className="d-flex align-items-start justify-content-center">
-            <div className="row w-100 bg-warning">
+            <div className="row w-100 ">
               <div className="col-sm-4 d-flex align-items-start justify-content-center">
                 <div className="card w-100   align-items-center m-1">
                   <div class="card-header  bg-dark text-white w-100 text-center">
                     <h5> Profile Card</h5>
                   </div>
+
                   <div class="card-body d-flex align-items-center flex-column text-center ">
                     <Image
                       className="bd-placeholder-img rounded-circle mt-3"
@@ -210,7 +115,8 @@ const profile = () => {
                       style={{ width: "200px", height: "200px" }}
                     />
 
-                    <h1 className="text-center">{auth.user.email}</h1>
+                    <h2 className="text-center">{profileName}</h2>
+                    <p>{auth.user.email}</p>
                     <p className="text-muted">
                       Sorry for not avaliable to update customize profile image
                       and other informations.

@@ -14,7 +14,6 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  console.log(user);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -33,8 +32,19 @@ export const AuthContextProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  const signup = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const [profileData, setProfileData] = useState({
+    owner_email: "",
+    name: "",
+    bio: "",
+  });
+  const signup = async (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password)
+      .then(async () => {
+        console.log("okay");
+      })
+      .catch((e) => {
+        reject(e);
+      });
   };
 
   const login = (email, password) => {

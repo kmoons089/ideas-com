@@ -32,7 +32,7 @@ const Category = () => {
     <Container>
       <br></br>
       <h1 className="wow animate__animated animate__fadeInUp text-center">
-        What is your Project ?
+        CHOOSE THE PROJECT
       </h1>
       <div className={CategoryStyle.cards}>
         {category.map((item) => (
