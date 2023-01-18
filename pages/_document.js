@@ -41,7 +41,7 @@ class MyDocument extends Document {
 
           <script
             src="https://kit.fontawesome.com/a076d05399.js"
-            crossorigin="anonymous"
+            crossOrigin="anonymous"
           ></script>
 
           <script>var Alert = ReactBootstrap.Alert;</script>
