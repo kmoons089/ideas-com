@@ -55,7 +55,7 @@ const review = () => {
           >
             Create Post
           </Button>
-          <Container className="w-50">
+          <Container style={{ maxWidth: "450px" }}>
             <PostsList mode="add" />
           </Container>
         </>
