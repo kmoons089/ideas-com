@@ -9,6 +9,7 @@ import { useAuth } from "../context/AuthContext";
 import CreatePost from "../components/CreatePost";
 import { useRouter } from "next/router";
 import FirestoreService from "../utils/FirestoreService";
+import ProfileEditModal from "../components-posts/ProfileEditModal";
 
 const profile = () => {
   const route = useRouter();
@@ -21,9 +22,18 @@ const profile = () => {
     stars: "0",
     createdAt: 0,
   });
+  const [profileInfo, setProfileInfo] = useState({
+    displayName: "",
+    bio: "",
+    img: "",
+    owner_email: "",
+  });
   const [varyingModal, setVaryingModal] = useState(false);
   const auth = useAuth();
   const [profileName, setProfileName] = useState("");
+  const [profileId, setProfileId] = useState("");
+  const [showProfileEditModal, setShowProfileEditModal] = useState(false);
+  const [varyingModal_forProfile, setVaryingModal_forProfile] = useState(false);
 
   /* ------------------------- for rating stars review ------------------------ */
   function onValueChange(e) {
@@ -39,6 +49,11 @@ const profile = () => {
   const handleModal = () => {
     setOpenModal(!openModal);
     setVaryingModal(!varyingModal);
+  };
+  /* ------------------------- handleProfileEditModal ------------------------- */
+  const handleProfileEditModal = () => {
+    setShowProfileEditModal(!showProfileEditModal);
+    setVaryingModal_forProfile(!varyingModal_forProfile);
   };
   /* ------------------------------- handlePost ------------------------------- */
   const handlePost = async () => {
@@ -69,11 +84,38 @@ const profile = () => {
         response._delegate._snapshot.docChanges[0].doc.data.value.mapValue
           .fields.displayName.stringValue
       );
+      setProfileId(
+        response._delegate._snapshot.docChanges[0].doc.key.path.segments[
+          response._delegate._snapshot.docChanges[0].doc.key.path.segments
+            .length - 1
+        ]
+      );
+      setProfileInfo((prev) => ({
+        ...prev,
+        displayName:
+          response._delegate._snapshot.docChanges[0].doc.data.value.mapValue
+            .fields.displayName.stringValue,
+        bio: response._delegate._snapshot.docChanges[0].doc.data.value.mapValue
+          .fields.bio.stringValue,
+        img: response._delegate._snapshot.docChanges[0].doc.data.value.mapValue
+          .fields.img.stringValue,
+      }));
     });
   }, []);
 
   return (
     <>
+      {showProfileEditModal && (
+        <>
+          <ProfileEditModal
+            varyingModal_forProfile={varyingModal_forProfile}
+            setVaryingModal_forProfile={setVaryingModal_forProfile}
+            handleProfileEditModal={handleProfileEditModal}
+            profileId={profileId}
+            profileInfo={profileInfo}
+          />
+        </>
+      )}
       {openModal && !loading && (
         <>
           <CreatePost
@@ -103,27 +145,32 @@ const profile = () => {
             <div className="row w-100 ">
               <div className="col-sm-4 d-flex align-items-start justify-content-center">
                 <div className="card w-100   align-items-center m-1">
-                  <div class="card-header  bg-dark text-white w-100 text-center">
+                  <div className="card-header  bg-dark text-white w-100 text-center">
                     <h5> Profile Card</h5>
                   </div>
 
-                  <div class="card-body d-flex align-items-center flex-column text-center ">
-                    <Image
+                  <div className="card-body d-flex align-items-center flex-column text-center ">
+                    <img
                       className="bd-placeholder-img rounded-circle mt-3"
-                      src={pfImage}
+                      src={
+                        profileInfo.img
+                          ? profileInfo.img
+                          : "https://freesvg.org/img/abstract-user-flat-4.png"
+                      }
                       alt=""
-                      style={{ width: "200px", height: "200px" }}
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        objectFit: "cover",
+                      }}
                     />
 
-                    <h2 className="text-center">{profileName}</h2>
-                    <p>{auth.user.email}</p>
-                    <p className="text-muted">
-                      Sorry for not avaliable to update customize profile image
-                      and other informations.
-                    </p>
+                    <h2 className="text-center">{profileInfo.displayName}</h2>
+                    <p className="text-muted">{auth.user.email}</p>
+                    <p>{profileInfo.bio}</p>
                   </div>
 
-                  <div class="card-footer w-100 d-flex justify-content-end">
+                  <div className="card-footer w-100 d-flex justify-content-end">
                     <Button
                       className="  m-1"
                       style={{ zIndex: "2" }}
@@ -131,24 +178,18 @@ const profile = () => {
                     >
                       Create Post
                     </Button>
+                    <Button
+                      className="  m-1"
+                      style={{ zIndex: "2" }}
+                      onClick={handleProfileEditModal}
+                    >
+                      Edit Profile
+                    </Button>
                   </div>
                 </div>
               </div>
-              <div
-                className="col-sm-8 d-flex align-items-center "
-                style={{ minHeight: "93vh" }}
-              >
-                <Container
-                  className=" d-flex align-items-start "
-                  style={{ minHeight: "93vh", backgroundColor: "white" }}
-                >
-                  <Container
-                    className="d-flex justify-content-center  align-items-center flex-column  w-100 "
-                    style={{ backgroundColor: "white" }}
-                  >
-                    <PostsList mode="edit" />
-                  </Container>
-                </Container>
+              <div className="col-sm-8 d-flex align-items-center ">
+                <PostsList mode="edit" parent_email={auth.user.email} />
               </div>
             </div>
           </Container>

@@ -17,12 +17,11 @@ function getAllPosts() {
       });
   });
 }
-function getProfilePosts() {
-  console.log(auth.currentUser.email);
-
+function getProfilePosts(email) {
+  console.log("parent email L: " + email);
   return new Promise((resolve, reject) => {
     db.collection("posts")
-      .where("owner_email", "==", auth.currentUser.email)
+      .where("owner_email", "==", email)
       .orderBy("createdAt", "desc")
       .get()
 
@@ -68,6 +67,26 @@ function addProfileData(data) {
       .then((docRef) => {
         resolve(docRef);
       })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+}
+
+function updateProfileData(data, id, url) {
+  console.log("called");
+  return new Promise((resolve, reject) => {
+    const _data = {
+      owner_email: data.owner_email,
+      bio: data.bio,
+      img: url ? url : null,
+      displayName: data.displayName,
+    };
+    console.log(_data);
+    db.collection("profiles")
+      .doc(id)
+      .update(_data)
+      .then(() => resolve())
       .catch((e) => {
         reject(e);
       });
@@ -133,4 +152,5 @@ export default {
   deletePost,
   addProfileData,
   getProfileInfo,
+  updateProfileData,
 };

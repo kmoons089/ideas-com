@@ -17,6 +17,8 @@ const Register = () => {
     owner_email: "",
     password: "",
     displayName: "",
+    img: "",
+    bio: "",
   });
   /* ------------------------------ handleSignup ------------------------------ */
   const handleSignup = async (e) => {

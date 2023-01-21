@@ -7,7 +7,7 @@ import { Loader } from "../components/Loader";
 import { Container } from "react-bootstrap";
 import bg from "../public/img/reviewBg.svg";
 
-const PostsList = ({ mode, props }) => {
+const PostsList = ({ mode, props, parent_email }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [noPost, setNoPost] = useState(false);
@@ -18,6 +18,7 @@ const PostsList = ({ mode, props }) => {
   useEffect(() => {
     setLoading(true);
     if (mode == "add") {
+      console.log("get all posts");
       FirestoreService.getAllPosts()
         .then((response) => {
           setPosts(response._delegate._snapshot.docChanges);
@@ -37,7 +38,9 @@ const PostsList = ({ mode, props }) => {
           alert("Error occured while fetching the menu item. " + e);
         });
     } else if (mode == "edit") {
-      FirestoreService.getProfilePosts()
+      console.log("parent email : " + parent_email);
+      FirestoreService.getProfilePosts(parent_email)
+
         .then((response) => {
           setPosts(response._delegate._snapshot.docChanges);
           console.log(response._delegate._snapshot.docChanges);
@@ -64,7 +67,10 @@ const PostsList = ({ mode, props }) => {
     <>
       {loading ? (
         <>
-          <Loader />
+          <Container className="d-flex w-100 h-100 align-items-center justify-content-center text-muted  text-dark mt-10">
+            {" "}
+            <Loader />
+          </Container>
         </>
       ) : (
         <>
@@ -76,12 +82,15 @@ const PostsList = ({ mode, props }) => {
             </>
           ) : (
             <>
-              <div className="d-flex w-100">
-                <Container className="d-flex w-100 flex-column ">
-                  {posts.map((article, index) => (
-                    <PostItem article={article} mode={mode} key={index} />
-                  ))}
-                </Container>
+              <div className="d-flex w-100 flex-column">
+                {posts.map((article, index) => (
+                  <PostItem
+                    article={article}
+                    mode={mode}
+                    key={index}
+                    parent_email={parent_email}
+                  />
+                ))}
               </div>
             </>
           )}
