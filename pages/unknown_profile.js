@@ -29,7 +29,7 @@ const unknown_profile = () => {
     owner_email: "",
   });
   const auth = useAuth();
-  const [parent_email, setParent_email] = useState(auth.user.email);
+  const [parent_email, setParent_email] = useState(other_email.data);
 
   useEffect(() => {
     // var key = Object.keys(other_email);
