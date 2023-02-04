@@ -1,5 +1,5 @@
 import ArticleItem from "./ArticleItem";
-import articleStyles from "../styles/Article.module.css";
+import articleStyles from "../styles3/Article.module.css";
 import Footer from "./Footer";
 
 import { articles } from "../data";

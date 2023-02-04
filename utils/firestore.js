@@ -1,6 +1,8 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 
+import { initializeFirestore } from "firebase/firestore";
+
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
@@ -19,6 +21,9 @@ const firebaseConfig = {
 // Initialize Firebase
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+// const db = initializeFirestore(firebaseApp, {
+//   experimentalForceLongPolling: true,
+// });
 const db = firebaseApp.firestore();
 export { db };
 

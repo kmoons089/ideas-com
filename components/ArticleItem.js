@@ -1,4 +1,4 @@
-import articleStyles from "../styles/Article.module.css";
+import articleStyles from "../styles3/Article.module.css";
 import Image from "next/image";
 
 const ArticleItem = ({ article }) => {
@@ -6,8 +6,11 @@ const ArticleItem = ({ article }) => {
     // <Link href={`/article/${article.id}`}>
     <>
       <a className={articleStyles.card}>
-        <h1 className="wow animate__animated animate__fadeInUp ">
-          {article.title}{" "}
+        <h1
+          className="wow animate__animated animate__fadeInUp "
+          style={{ color: "#4a2f80" }}
+        >
+          {article.title}
         </h1>
 
         <p className="wow animate__animated animate__fadeInUp ">

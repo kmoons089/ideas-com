@@ -33,7 +33,6 @@ function MyApp({ Component, pageProps }) {
     if (noAuthRequired.includes(router.pathname)) {
       null;
     } else {
-      console.log("Login require ");
     }
   }, []);
 

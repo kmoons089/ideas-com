@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
-import PostsList from "../components-posts/PostsList";
+import ReviewArray from "../components-posts/ReviewArray";
 import { Button, Container } from "react-bootstrap";
 import { Loader } from "../components/Loader";
 import Image from "next/image";
 import pfImage from "../public/img/profileImage.png";
 import { db } from "../utils/firestore";
 import { useAuth } from "../context/AuthContext";
-import CreatePost from "../components/CreatePost";
+import CreateReview from "../components/CreateReview";
 import { useRouter } from "next/router";
 import FirestoreService from "../utils/FirestoreService";
 import ProfileEditModal from "../components-posts/ProfileEditModal";
+import PostsArray from "../componentsForPost/PostsArray";
+import CreateFbPost from "../componentsForPost/CreateFbPost";
+import FirestoreServiceForPosts from "../utils/FirestoreServiceForPosts";
 
 const profile = () => {
   const route = useRouter();
   const [openModal, setOpenModal] = useState(false);
+  const [postCount, setPostCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     caption: "",
@@ -79,6 +83,19 @@ const profile = () => {
   /* ---------------------------------- edit ---------------------------------- */
 
   useEffect(() => {
+    FirestoreServiceForPosts.getProfilePosts(auth.user.email)
+
+      .then((response) => {
+        console.log(response._delegate._snapshot.docChanges.length);
+        setPostCount(response._delegate._snapshot.docChanges.length);
+      })
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((e) => {
+        console.log("Error occured while fetching profileInfo " + e);
+        console.log(e);
+      });
     FirestoreService.getProfileInfo(auth.user.email).then((response) => {
       setProfileName(
         response._delegate._snapshot.docChanges[0].doc.data.value.mapValue
@@ -118,7 +135,7 @@ const profile = () => {
       )}
       {openModal && !loading && (
         <>
-          <CreatePost
+          <CreateReview
             varyingModal={varyingModal}
             handleModal={handleModal}
             mode="add"
@@ -144,8 +161,14 @@ const profile = () => {
           <Container className="d-flex align-items-start justify-content-center">
             <div className="row w-100 ">
               <div className="col-sm-4 d-flex align-items-start justify-content-center">
-                <div className="card w-100   align-items-center m-1">
-                  <div className="card-header  bg-dark text-white w-100 text-center">
+                <div
+                  // style={{ width: "100%" }}
+                  className="card  w-100  align-items-center shadow mt-3 "
+                >
+                  <div
+                    className="card-header   text-white w-100 text-center"
+                    style={{ backgroundColor: "#684d9d" }}
+                  >
                     <h5> Profile Card</h5>
                   </div>
 
@@ -169,27 +192,42 @@ const profile = () => {
                     <p className="text-muted">{auth.user.email}</p>
                     <p>{profileInfo.bio}</p>
                   </div>
+                  <div className="card w-100" style={{ border: "none" }}>
+                    <div className="d-flex w-100">
+                      <div
+                        className="d-flex align-items-center justify-content-center w-50 h-100"
+                        style={{ cursor: "pointer" }}
+                      >
+                        <h6>
+                          Followers :{" "}
+                          <span className="text-muted">coming soon</span>
+                        </h6>
+                      </div>
 
+                      <div
+                        className="d-flex w-50 align-items-center justify-content-center "
+                        style={{ cursor: "pointer" }}
+                      >
+                        <h6>Posts : {postCount}</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <CreateFbPost />
                   <div className="card-footer w-100 d-flex justify-content-end">
-                    <Button
-                      className="  m-1"
-                      style={{ zIndex: "2" }}
-                      onClick={handleModal}
-                    >
-                      Create Post
-                    </Button>
-                    <Button
-                      className="  m-1"
-                      style={{ zIndex: "2" }}
+                    <div
+                      className="btn  m-1 text-light"
+                      style={{ zIndex: "2", backgroundColor: "#684d9d" }}
                       onClick={handleProfileEditModal}
                     >
                       Edit Profile
-                    </Button>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="col-sm-8 d-flex align-items-center ">
-                <PostsList mode="edit" parent_email={auth.user.email} />
+              <div className="col-sm-8 d-flex align-items-center flex-column">
+                {/* <ReviewArray mode="edit" parent_email={auth.user.email} /> */}
+
+                <PostsArray mode="add" />
               </div>
             </div>
           </Container>

@@ -5,8 +5,8 @@ const RatingStar_read = ({ starcount }) => {
 
   useEffect(() => {
     setStars(starcount);
-    console.log(starcount);
-  }, []);
+    //console.log(starcount);
+  }, [starcount]);
   return (
     <div>
       <div className="container d-flex justify-content-center ">

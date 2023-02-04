@@ -16,18 +16,24 @@ const Register = () => {
   const [data, setData] = useState({
     owner_email: "",
     password: "",
+    ConfirmPassword: "",
     displayName: "",
     img: "",
     bio: "",
   });
+  const [passwordError, setPasswordError] = useState(false);
   /* ------------------------------ handleSignup ------------------------------ */
   const handleSignup = async (e) => {
+    if (data.password !== data.ConfirmPassword) {
+      setPasswordError(true);
+      return;
+    }
     e.preventDefault();
 
     try {
-      await signup(data.owner_email, data.password).then(() => {
-        router.push("/review");
-        FirestoreService.addProfileData(data).then(
+      await signup(data.owner_email, data.password).then(async () => {
+        router.push("/");
+        await FirestoreService.addProfileData(data).then(
           console.log("Profile data added : ")
         );
       });
@@ -54,13 +60,13 @@ const Register = () => {
         <Form>
           <MDBRow>
             <MDBCol col="10" md="6">
-              <div className="d-flex flex-row align-items-center justify-content-center text-danger text-center">
+              {/* <div className="d-flex flex-row align-items-center justify-content-center text-danger text-center">
                 <h5>
                   <WarningAmberIcon sx={{ fontSize: 70 }} />
                   REGISTER NOW AND ENJOY NEW EXPERIENCE{" "}
                   <WarningAmberIcon sx={{ fontSize: 70 }} />
                 </h5>
-              </div>
+              </div> */}
               <Image
                 src={img}
                 className="img-fluid"
@@ -81,7 +87,7 @@ const Register = () => {
                 wrapperClass="mb-4"
                 label="Display name"
                 type="text"
-                placeholder="Enter nickname "
+                // placeholder="Enter nickname "
                 required
                 onChange={(e) =>
                   setData({
@@ -97,7 +103,7 @@ const Register = () => {
                 wrapperClass="mb-4"
                 label="Email address"
                 type="email"
-                placeholder="Enter email"
+                // placeholder="Enter email"
                 required
                 onChange={(e) =>
                   setData({
@@ -113,7 +119,7 @@ const Register = () => {
                 wrapperClass="mb-4"
                 label="Password"
                 type="password"
-                placeholder="Password"
+                // placeholder="Password"
                 required
                 onChange={(e) =>
                   setData({
@@ -125,11 +131,40 @@ const Register = () => {
                 autoComplete="new-password"
                 size="lg"
               />
+              {passwordError && (
+                <>
+                  <p className="text-danger">Passwords are not same.</p>
+                </>
+              )}
+              <MDBInput
+                wrapperClass="mb-4"
+                label="Confirm Password"
+                type="password"
+                // placeholder="Password"
+                required
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    ConfirmPassword: e.target.value,
+                  })
+                }
+                value={data.ConfirmPassword}
+                autoComplete="new-password"
+                size="lg"
+              />
 
               <div className="text-center text-md-start mt-4 pt-2">
-                <Button className="mb-0 px-5" onClick={handleSignup}>
+                <div
+                  style={{
+                    backgroundColor: "#6741b3",
+                    border: "none",
+                    color: "white",
+                  }}
+                  className="btn mb-0 px-5"
+                  onClick={handleSignup}
+                >
                   REGISTER
-                </Button>
+                </div>
                 <p className="small fw-bold mt-2 pt-1 mb-2">
                   Already had an account?
                   <Link href="/login" className="link-danger">

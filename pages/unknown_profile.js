@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import PostsList from "../components-posts/PostsList";
+import ReviewArray from "../components-posts/ReviewArray";
 import { Button, Container } from "react-bootstrap";
 import { Loader } from "../components/Loader";
 import Image from "next/image";
 import pfImage from "../public/img/profileImage.png";
 import { db } from "../utils/firestore";
 import { useAuth } from "../context/AuthContext";
-import CreatePost from "../components/CreatePost";
+import CreateReview from "../components/CreateReview";
 import { useRouter } from "next/router";
 import FirestoreService from "../utils/FirestoreService";
 import ProfileEditModal from "../components-posts/ProfileEditModal";
@@ -110,7 +110,7 @@ const unknown_profile = () => {
                 </div>
               </div>
               <div className="col-sm-8 d-flex align-items-center ">
-                <PostsList mode="edit" parent_email={parent_email} />
+                <ReviewArray mode="edit" parent_email={parent_email} />
               </div>
             </div>
           </Container>

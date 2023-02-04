@@ -1,11 +1,11 @@
 import Meta from "../components/Meta";
 import React, { useEffect, useState } from "react";
 
-import PostsList from "../components-posts/PostsList";
+import ReviewArray from "../components-posts/ReviewArray";
 import { Button, Container } from "react-bootstrap";
 import { Loader } from "../components/Loader";
 import { useAuth } from "../context/AuthContext";
-import CreatePost from "../components/CreatePost";
+import CreateReview from "../components/CreateReview";
 
 const review = () => {
   const { user } = useAuth();
@@ -24,7 +24,7 @@ const review = () => {
     <>
       {openModal && !loading && (
         <>
-          <CreatePost
+          <CreateReview
             varyingModal={varyingModal}
             handleModal={handleModal}
             mode="add"
@@ -39,25 +39,10 @@ const review = () => {
       ) : (
         <>
           <Meta title="Login" />
-          <div
-            style={{
-              width: "100%",
-              minHeight: "100vh",
-              position: "fixed",
-              top: "0",
-              zIndex: -3,
-            }}
-          ></div>
-          <Button
-            style={{ zIndex: "2" }}
-            className="position-fixed bottom-0 end-0 m-5 btn-lg"
-            onClick={handleModal}
-          >
-            Create Post
-          </Button>
-          <Container style={{ maxWidth: "450px" }}>
-            <PostsList mode="add" />
-          </Container>
+
+          <CreateReview />
+
+          <ReviewArray mode="add" />
         </>
       )}
     </>

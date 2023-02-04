@@ -5,7 +5,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
- 
+
 }
 
 a {
@@ -18,6 +18,15 @@ a {
  
 }
 
+.Post-btn{
+  background-color: #684d9d;
+  color: white;
+}
+.Close-btn{
+  background-color: white;
+  border :1px #684d9d solid;
+  color:#684d9d;
+}
 /* ------------------------------- see layers ------------------------------- */
 /* * {
   outline: 1px solid #f00 !important;
@@ -26,6 +35,22 @@ a {
 } */
 /* ---------------------------- ^^^see layers^^^ ---------------------------- */
 
+
+
+
+.hoverbutton{
+  text-decoration: none;
+  color: white;
+  background-color: #4a2f80;
+}
+
+
+.hoverbutton:hover{
+  color: white;
+  text-decoration: none;
+  background-color: #36225d;
+}
+
 /* --------------------------------- sidebar -------------------------------- */
 
 #grad {
@@ -33,7 +58,7 @@ a {
 }
 
 .bghover:hover{
-  background: #000000;
+  background: #261842;
   border-radius: 5px;
 }
 

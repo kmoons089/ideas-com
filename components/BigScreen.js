@@ -9,8 +9,8 @@ import hw from "../public/img/hwbgsc.png";
 import Carousel from "react-bootstrap/Carousel";
 
 const BigScreen = ({ category }) => {
-  const [img1, setImg1] = useState();
-  const [img2, setImg2] = useState();
+  const [img1, setImg1] = useState("");
+  const [img2, setImg2] = useState("");
 
   useEffect(() => {
     if (category == "html") {
@@ -27,6 +27,8 @@ const BigScreen = ({ category }) => {
       setImg2(person);
     }
   }, []);
+
+  useEffect(() => {}, [img1, img2]);
   return (
     <div className={style.homeScreen}>
       <Image

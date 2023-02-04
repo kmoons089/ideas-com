@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CategoryStyle from "../styles/category.module.css";
-import articleStyles from "../styles/Article.module.css";
+
 import Item from "./Item";
 import html from "../public/img/htmllogo.png";
 import java from "../public/img/javalogo.png";

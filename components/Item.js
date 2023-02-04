@@ -1,5 +1,3 @@
-import articleStyles from "../styles/Article.module.css";
-import Link from "next/link";
 import style from "../styles/category.module.css";
 import router from "next/router";
 import Image from "next/image";

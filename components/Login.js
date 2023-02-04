@@ -33,7 +33,7 @@ const Login = () => {
 
     console.log(user);
     try {
-      await login(data.email, data.password).then(router.push("/review"));
+      await login(data.email, data.password).then(() => router.push("/"));
       sessionStorage.setItem("noUser", false);
       sessionStorage.setItem("wrongPassword", false);
     } catch (err) {
@@ -48,6 +48,18 @@ const Login = () => {
         return null;
       }
     }
+  };
+
+  const handleForgetPassword = () => {
+    Email.send({
+      Host: "smtp.elasticemail.com",
+      Username: "kmoons089@gmail.com",
+      Password: "577CCD7D47A1BD2ACE6FEAC98897EEADBBB1",
+      To: "them@website.com",
+      From: "you@isp.com",
+      Subject: "This is the subject",
+      Body: "And this is the body",
+    }).then((message) => alert(message));
   };
 
   useEffect(() => {
@@ -82,13 +94,13 @@ const Login = () => {
         <Form>
           <MDBRow>
             <MDBCol col="10" md="6">
-              <div className="d-flex flex-row align-items-center justify-content-center text-danger text-center">
+              {/* <div className="d-flex flex-row align-items-center justify-content-center text-danger text-center">
                 <h5>
                   <WarningAmberIcon sx={{ fontSize: 70 }} />
                   LOGIN NOW AND ENJOY NEW EXPERIENCE{" "}
                   <WarningAmberIcon sx={{ fontSize: 70 }} />
                 </h5>
-              </div>
+              </div> */}
               <Image
                 src={img}
                 className="img-fluid"
@@ -112,9 +124,8 @@ const Login = () => {
               )}
               <MDBInput
                 wrapperClass="mb-4"
-                label="Email address"
+                label="Email"
                 type="email"
-                placeholder="Enter email"
                 required
                 onChange={(e) =>
                   setData({
@@ -135,7 +146,6 @@ const Login = () => {
                 wrapperClass="mb-4"
                 label="Password"
                 type="password"
-                placeholder="Password"
                 required
                 onChange={(e) =>
                   setData({
@@ -149,9 +159,27 @@ const Login = () => {
               />
 
               <div className="text-center text-md-start mt-4 pt-2">
-                <Button className="mb-0 px-5" onClick={handleLogin}>
+                <div
+                  style={{
+                    backgroundColor: "#6741b3",
+                    border: "none",
+                    color: "white",
+                  }}
+                  className="btn mb-0 px-5"
+                  onClick={handleLogin}
+                >
                   LOGIN
-                </Button>
+                </div>
+                {/* <a
+                  href="#"
+                  style={{
+                    marginLeft: "20px",
+                    textDecoration: "none",
+                  }}
+                  onClick={handleForgetPassword}
+                >
+                  Forget Password
+                </a> */}
                 <p className="small fw-bold mt-2 pt-1 mb-2">
                   Don't have an account?
                   <Link href="/register" className="link-danger">

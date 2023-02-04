@@ -13,9 +13,9 @@ import {
   MDBSpinner,
 } from "mdb-react-ui-kit";
 import { Button } from "react-bootstrap";
-import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
+import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../utils/firestore";
-import { uploadBytes } from "firebase/storage";
+
 import { v4 } from "uuid";
 import { useAuth } from "../context/AuthContext";
 import FirestoreService from "../utils/FirestoreService";
@@ -150,10 +150,26 @@ export default function ProfileEditModal({
               </form>
             </MDBModalBody>
             <MDBModalFooter>
-              <Button color="secondary" onClick={handleProfileEditModal}>
+              <div
+                className="btn"
+                style={{
+                  backgroundColor: "white",
+                  color: "#684d9d",
+                  border: "1px #684d9d solid",
+                }}
+                color="secondary"
+                onClick={handleProfileEditModal}
+              >
                 Close
-              </Button>
-              <Button onClick={handleProfileInfo}>
+              </div>
+              <div
+                className="btn"
+                style={{
+                  backgroundColor: "#684d9d",
+                  color: "white",
+                }}
+                onClick={handleProfileInfo}
+              >
                 {saveChangesBtn ? (
                   <>
                     <MDBSpinner
@@ -167,7 +183,7 @@ export default function ProfileEditModal({
                 ) : (
                   <>Save Changes</>
                 )}
-              </Button>
+              </div>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>

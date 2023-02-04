@@ -1,11 +1,10 @@
-import { resolve } from "styled-jsx/css";
 import { db } from "./firestore";
 
 import { auth } from "./firestore";
 
-function getAllPosts() {
+function getAllReviews() {
   return new Promise((resolve, reject) => {
-    db.collection("posts")
+    db.collection("reviews")
       .orderBy("createdAt", "desc")
       .get()
 
@@ -33,17 +32,18 @@ function getProfilePosts(email) {
       });
   });
 }
-function addNewPost(data) {
+function addNewReview(data) {
   const date = new Date();
   const seconds = Math.floor(date.getTime() / 1000);
   return new Promise((resolve, reject) => {
     const inputdata = {
-      body: data.body,
+      review: data.review,
       stars: data.stars,
       createdAt: seconds,
       owner_email: data.owner_email,
     };
-    db.collection("posts")
+    console.log(inputdata);
+    db.collection("reviews")
       .add(inputdata)
       .then((docRef) => {
         resolve(docRef);
@@ -106,7 +106,7 @@ function getProfileInfo(email) {
       });
   });
 }
-function updatePost(id, caption, body, owner_email, stars) {
+function updateReview(id, caption, body, owner_email, stars) {
   console.log(id);
   const date = new Date();
   const seconds = Math.floor(date.getTime() / 1000);
@@ -130,7 +130,7 @@ function updatePost(id, caption, body, owner_email, stars) {
   });
 }
 
-function deletePost(postID) {
+function deleteReview(postID) {
   return new Promise((resolve, reject) => {
     db.collection("posts")
       .doc(postID)
@@ -144,13 +144,31 @@ function deletePost(postID) {
   });
 }
 
+function getArticles(category) {
+  console.log("category : " + category);
+  return new Promise((resolve, reject) => {
+    db.collection("posts")
+      .where("category", "==", category)
+      .orderBy("title", "desc")
+      .get()
+
+      .then((allposts) => {
+        resolve(allposts);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+}
+
 export default {
-  getAllPosts,
+  getAllReviews,
   getProfilePosts,
-  addNewPost,
-  updatePost,
-  deletePost,
+  addNewReview,
+  updateReview,
+  deleteReview,
   addProfileData,
   getProfileInfo,
   updateProfileData,
+  getArticles,
 };

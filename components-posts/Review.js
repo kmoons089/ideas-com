@@ -3,28 +3,18 @@ import { Loader } from "./Loader";
 import Link from "next/link";
 import {
   MDBCard,
-  MDBModalDialog,
-  MDBModalContent,
   MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
   MDBCardHeader,
   MDBCardFooter,
-  MDBModal,
-  MDBModalHeader,
-  MDBModalTitle,
-  MDBModalBody,
-  MDBModalFooter,
-  MDBTextArea,
-  MDBInput,
   MDBSpinner,
 } from "mdb-react-ui-kit";
+import gridStyle from "../styles/Article.module.css";
 import { Container } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import FirestoreService from "../utils/FirestoreService";
-import CreatePostForm from "../components/RatingStar_read";
-import CreatePost from "../components/CreatePost";
+import CreateReviewForm from "../components/RatingStar_read";
+import CreateReview from "../components/CreateReview";
 import RatingStar_read from "../components/RatingStar_read";
 import { useRouter } from "next/router";
 
@@ -45,38 +35,50 @@ export default function ArticleItem({ article, mode, props, parent_email }) {
     return [state, asyncSetState];
   };
   const route = useRouter();
-  const [stars, setStars] = useState("0");
+
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
-  const [profileName, setProfileName] = useState("");
-  const [data, setData] = useAsyncState({
-    caption: "",
-    body: "",
+
+  const [reviewData, setReviewData] = useState({
+    review: "",
+    stars: 0,
     owner_email: "",
-    stars: "0",
-    createdAt: 0,
+    id: "",
+  });
+  const [post_onwer, setPost_owner] = useState({
+    displayName: "",
+    pfImg: "",
   });
 
   const [varyingModal, setVaryingModal] = useState(false);
-  const [profileImage, setProfileImage] = useState(false);
   const auth = useAuth();
   const [currentPostId, setCurrentPostId] = useState(
     article.doc.key.path.segments[article.doc.key.path.segments.length - 1]
   );
-  const [owner, setOwner] = useState("");
+
+  const handleHeader = () => {
+    const post_email =
+      article.doc.data.value.mapValue.fields.owner_email.stringValue;
+    console.log(post_email);
+    if (post_email === auth.user.email) {
+      route.push("/profile");
+    } else {
+      route.push(`/profiles/${post_email}`);
+    }
+  };
 
   /* --------------------------------- delete --------------------------------- */
   const handleDelete = () => {
     setBtnLoading(true);
-    FirestoreService.deletePost(currentPostId)
+    FirestoreService.deleteReview(currentPostId)
       .then(() => {
         setBtnLoading(false);
 
         window.location.reload(false);
       })
       .catch((e) => {
-        alert("Error occured: " + e.message);
+        console.log("Error occured: " + e.message);
       });
   };
 
@@ -86,39 +88,50 @@ export default function ArticleItem({ article, mode, props, parent_email }) {
     setVaryingModal(!varyingModal);
   };
 
+  /* ----------------------------- get reviewData ----------------------------- */
   useEffect(() => {
-    console.log(
-      "owner email : " +
-        article.doc.data.value.mapValue.fields.owner_email.stringValue
-    );
-    setOwner(article.doc.data.value.mapValue.fields.owner_email.stringValue);
-    const email =
-      article.doc.data.value.mapValue.fields.owner_email.stringValue;
-    FirestoreService.getProfileInfo(email).then((response) => {
-      console.log(response._delegate._snapshot.docChanges);
-      setProfileName(
-        response._delegate._snapshot.docChanges[0].doc.data.value.mapValue
-          .fields.displayName.stringValue
-      );
-      if (
-        response._delegate._snapshot.docChanges[0].doc.data.value.mapValue
-          .fields.img == undefined
-      ) {
-        setProfileImage("");
-      } else {
-        setProfileImage(
-          response._delegate._snapshot.docChanges[0].doc.data.value.mapValue
-            .fields.img.stringValue
-        );
-      }
-    });
+    const getReviewData = async () => {
+      setReviewData({
+        ...reviewData,
+        review: article.doc.data.value.mapValue.fields.review.stringValue,
+        stars: article.doc.data.value.mapValue.fields.stars.stringValue,
+        owner_email:
+          article.doc.data.value.mapValue.fields.owner_email.stringValue,
+      });
+    };
+    getReviewData();
   }, []);
+
+  /* ---------------------------- get profild data ---------------------------- */
+  useEffect(() => {
+    let email = reviewData.owner_email;
+    const getPostOwnerInfo = async () => {
+      try {
+        await FirestoreService.getProfileInfo(email).then((response) => {
+          setPost_owner({
+            ...post_onwer,
+            displayName:
+              response._delegate._snapshot.docChanges[0].doc.data.value.mapValue
+                .fields.displayName.stringValue,
+            pfImg:
+              response._delegate._snapshot.docChanges[0].doc.data.value.mapValue
+                .fields.img.stringValue,
+          });
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getPostOwnerInfo();
+  }, [reviewData]);
+
+  useEffect(() => {}, []);
 
   return (
     <>
-      {openModal && !loading && (
+      {/* {openModal && !loading && (
         <>
-          <CreatePost
+          <CreateReview
             varyingModal={varyingModal}
             handleModal={handleModal}
             mode="edit"
@@ -130,14 +143,17 @@ export default function ArticleItem({ article, mode, props, parent_email }) {
             }
           />
         </>
-      )}
+      )} */}
 
       <MDBCard
-        alignment="card border border-warning shadow-0 mb-3 mt-2"
-        className="w-100 shadow-sm  rounded"
+        alignment="card border  shadow-0 mb-3 mt-2 shadow"
+        className={gridStyle.card}
       >
-        <MDBCardHeader>
-          <Link
+        <MDBCardHeader
+          onClick={handleHeader}
+          style={{ backgroundColor: "#684d9d" }}
+        >
+          <div
             // onClick={() => {
             //   if (
             //     article.doc.data.value.mapValue.fields.owner_email
@@ -149,23 +165,23 @@ export default function ArticleItem({ article, mode, props, parent_email }) {
             //   }
             // }}
             className="d-flex align-items-center"
-            href={{
-              pathname:
-                article.doc.data.value.mapValue.fields.owner_email
-                  .stringValue == auth.user.email
-                  ? "/profile"
-                  : "/unknown_profile",
-              query: {
-                data: article.doc.data.value.mapValue.fields.owner_email
-                  .stringValue,
-              },
-            }}
+            // href={{
+            //   pathname:
+            //     article.doc.data.value.mapValue.fields.owner_email
+            //       .stringValue == auth.user.email
+            //       ? "/profile"
+            //       : "/unknown_profile",
+            //   query: {
+            //     data: article.doc.data.value.mapValue.fields.owner_email
+            //       .stringValue,
+            //   },
+            // }}
             style={{ textDecoration: "none", color: "black" }}
           >
             <img
               src={
-                profileImage
-                  ? profileImage
+                post_onwer.pfImg
+                  ? post_onwer.pfImg
                   : "https://freesvg.org/img/abstract-user-flat-4.png"
               }
               alt=""
@@ -178,23 +194,48 @@ export default function ArticleItem({ article, mode, props, parent_email }) {
               }}
             />
             <div className="d-flex flex-column ">
-              <h4 className="mt-3">{profileName}</h4>
-              <p>
-                {article.doc.data.value.mapValue.fields.owner_email.stringValue}
-              </p>
+              {post_onwer.displayName === "" ? (
+                <>
+                  <p class="placeholder-glow ">
+                    <span class="placeholder" style={{ width: "100%" }}></span>
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h4 className="mt-3 text-light">{post_onwer.displayName}</h4>
+                </>
+              )}
+
+              {reviewData.owner_email === "" ? (
+                <>
+                  <p class="placeholder-glow ">
+                    <span class="placeholder" style={{ width: "100%" }}></span>
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="text-light">{reviewData.owner_email}</p>
+                </>
+              )}
             </div>
-          </Link>
+          </div>
         </MDBCardHeader>
         <MDBCardBody>
-          <MDBCardTitle>
-            {article.doc.data.value.mapValue.fields.body.stringValue}
-          </MDBCardTitle>
+          {reviewData.review === "" ? (
+            <>
+              <p class="placeholder-glow ">
+                <span class="placeholder" style={{ width: "100%" }}></span>
+              </p>
+            </>
+          ) : (
+            <>
+              <p>{reviewData.review}</p>
+            </>
+          )}
 
-          <RatingStar_read
-            starcount={article.doc.data.value.mapValue.fields.stars.stringValue}
-          />
+          <RatingStar_read starcount={reviewData.stars} />
         </MDBCardBody>
-        <MDBCardFooter>
+        {/* <MDBCardFooter>
           {mode == "edit" && parent_email == auth.user.email && (
             <>
               <div className="d-flex justify-content-md-end ">
@@ -249,7 +290,7 @@ export default function ArticleItem({ article, mode, props, parent_email }) {
               </div>
             </>
           )}
-        </MDBCardFooter>
+        </MDBCardFooter> */}
       </MDBCard>
     </>
   );

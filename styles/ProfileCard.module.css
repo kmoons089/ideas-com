@@ -1,0 +1,22 @@
+.profileCard{
+    width: 300px;
+    position: fixed;
+    top: 80px;
+    z-index: 4;
+    right: 10px;
+}
+.navPlace{
+   
+    height: 70px;
+    
+}
+@media only screen and (max-width: 639px) {
+    .profileCard{
+        top: 150px;
+    }
+    .navPlace{
+   
+        height: 140px;
+        
+    }
+}

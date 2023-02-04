@@ -38,6 +38,7 @@ export const AuthContextProvider = ({ children }) => {
     bio: "",
   });
   const signup = async (email, password) => {
+    console.log(email, password);
     return createUserWithEmailAndPassword(auth, email, password)
       .then(async () => {
         console.log("okay");

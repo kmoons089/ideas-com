@@ -1,0 +1,7 @@
+review ပြင်ရန်
+
+for the whole backgroundColor 
+-> global.css
+-> _app.js
+
+#4a2f80 Navbar

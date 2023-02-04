@@ -21,9 +21,21 @@
   align-items: center;
   font-size: 1.25rem;
 }
+
+.postArray{
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  
+}
+
 @media only screen and (min-width: 600px) {
   /* For tablets: */
 }
-@media only screen and (min-width: 375px) {
+@media only screen and (max-width: 420px) {
   /* For phone: */
+  .postArray{
+    width: 100%;
+   
+  }
 }

@@ -12,10 +12,10 @@ class MyDocument extends Document {
             crossOrigin="anonymous"
             referrerPolicy="no-referrer"
           />
-          <link
+          {/* <link
             rel="stylesheet"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          ></link>
+          ></link> */}
           <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -43,7 +43,12 @@ class MyDocument extends Document {
             src="https://kit.fontawesome.com/a076d05399.js"
             crossOrigin="anonymous"
           ></script>
-
+          {/* <script
+            src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossOrigin="anonymous"
+          ></script> */}
+          <script src="https://smtpjs.com/v3/smtp.js"></script>
           <script>var Alert = ReactBootstrap.Alert;</script>
         </body>
       </Html>
