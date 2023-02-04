@@ -2,13 +2,20 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import img from "../public/img/loginvector.png";
 import { Button } from "react-bootstrap";
-import { MDBContainer, MDBCol, MDBRow, MDBInput } from "mdb-react-ui-kit";
+import {
+  MDBContainer,
+  MDBCol,
+  MDBRow,
+  MDBInput,
+  MDBSpinner,
+} from "mdb-react-ui-kit";
 import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
 import { Form } from "react-bootstrap";
 import { useRouter } from "next/router";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import FirestoreService from "../utils/FirestoreService";
+import { stringify } from "@firebase/util";
 
 const Register = () => {
   const router = useRouter();
@@ -21,28 +28,76 @@ const Register = () => {
     img: "",
     bio: "",
   });
+  const [emailError, setEmailError] = useState(false);
+  const [nameError, setNameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [loading, setLoading] = useState(false);
   /* ------------------------------ handleSignup ------------------------------ */
   const handleSignup = async (e) => {
+    setLoading(true);
+    console.log(stringify(data));
+    if (data.owner_email === "") {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+    }
+    if (data.displayName === "") {
+      setNameError(true);
+    } else {
+      setNameError(false);
+    }
+    if (data.password === "" || data.ConfirmPassword === "") {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
+    if (data.password.length < 8) {
+      setPasswordError(true);
+      alert("Fill aleast 8 letters");
+    } else {
+      setPasswordError(false);
+    }
+
     if (data.password !== data.ConfirmPassword) {
       setPasswordError(true);
+      alert(
+        "Password and confirm password must be the same. Like all girls are ths same."
+      );
+    } else {
+      // setPasswordError(false);
+    }
+    if (
+      data.owner_email === "" ||
+      data.displayName === "" ||
+      data.password === "" ||
+      data.ConfirmPassword === "" ||
+      data.password.length < 8 ||
+      data.password !== data.ConfirmPassword
+    ) {
+      //above are all errors
+      setLoading(false);
       return;
     }
     e.preventDefault();
 
     try {
       await signup(data.owner_email, data.password).then(async () => {
-        router.push("/");
-        await FirestoreService.addProfileData(data).then(
-          console.log("Profile data added : ")
-        );
+        await FirestoreService.addProfileData(data)
+          .then(console.log("Profile data added : "))
+          .catch((error) => {
+            return;
+          })
+          .finally(() => {
+            setLoading(false);
+            router.push("/");
+          });
       });
     } catch (err) {
-      if ((err.message = "Firebase: Error (auth/invalid-email).")) {
-        alert(
-          "Invalid Email Or Already Used Email Or Too Short Password (Password must includes at least 6 characters)"
-        );
-      }
+      // if ((err.message = "Firebase: Error (auth/invalid-email).")) {
+      //   alert(
+      //     "Invalid Email Or Already Used Email Or Too Short Password (Password must includes at least 6 characters)"
+      //   );
+      // }
       console.log(err);
     }
   };
@@ -83,9 +138,19 @@ const Register = () => {
               </div>
 
               <div className="divider d-flex align-items-center my-4"></div>
+              <label htmlFor="formFile" className="form-label">
+                Name :
+              </label>
+              {nameError && (
+                <>
+                  <p className="text-danger">
+                    Please fill this field correctly
+                  </p>
+                </>
+              )}
               <MDBInput
+                maxLength="20"
                 wrapperClass="mb-4"
-                label="Display name"
                 type="text"
                 // placeholder="Enter nickname "
                 required
@@ -98,10 +163,18 @@ const Register = () => {
                 value={data.displayName}
                 size="lg"
               />
-
+              <label htmlFor="formFile" className="form-label">
+                Email :
+              </label>
+              {emailError && (
+                <>
+                  <p className="text-danger">
+                    Please fill this field correctly
+                  </p>
+                </>
+              )}
               <MDBInput
                 wrapperClass="mb-4"
-                label="Email address"
                 type="email"
                 // placeholder="Enter email"
                 required
@@ -115,9 +188,24 @@ const Register = () => {
                 autoComplete="current-email"
                 size="lg"
               />
+              <p className="text-danger">
+                Remember your password becuz we dont have "forget password"
+                feature yet. But you can contact the admin [09-952168823].
+              </p>
+              <label htmlFor="formFile" className="form-label">
+                Password (at least 8 letters) :
+              </label>
+
+              {passwordError && (
+                <>
+                  <p className="text-danger">
+                    Please fill this field correctly
+                  </p>
+                </>
+              )}
               <MDBInput
+                minLength="8"
                 wrapperClass="mb-4"
-                label="Password"
                 type="password"
                 // placeholder="Password"
                 required
@@ -131,14 +219,18 @@ const Register = () => {
                 autoComplete="new-password"
                 size="lg"
               />
+              <label htmlFor="formFile" className="form-label">
+                Confirm Password :
+              </label>
               {passwordError && (
                 <>
-                  <p className="text-danger">Passwords are not same.</p>
+                  <p className="text-danger">
+                    Please fill this field correctly
+                  </p>
                 </>
               )}
               <MDBInput
                 wrapperClass="mb-4"
-                label="Confirm Password"
                 type="password"
                 // placeholder="Password"
                 required
@@ -163,7 +255,19 @@ const Register = () => {
                   className="btn mb-0 px-5"
                   onClick={handleSignup}
                 >
-                  REGISTER
+                  {loading ? (
+                    <>
+                      <MDBSpinner
+                        size="sm"
+                        role="status"
+                        tag="span"
+                        className="me-2"
+                      />
+                      Loading...
+                    </>
+                  ) : (
+                    <> REGISTER</>
+                  )}
                 </div>
                 <p className="small fw-bold mt-2 pt-1 mb-2">
                   Already had an account?

@@ -43,13 +43,29 @@ export const AuthContextProvider = ({ children }) => {
       .then(async () => {
         console.log("okay");
       })
-      .catch((e) => {
-        reject(e);
+      .catch((error) => {
+        if (error.code == "auth/email-already-in-use") {
+          alert("The email address is already in use");
+        } else if (error.code == "auth/invalid-email") {
+          alert("The email address is not valid.");
+        } else if (error.code == "auth/operation-not-allowed") {
+          alert("Operation not allowed.");
+        } else if (error.code == "auth/weak-password") {
+          alert("The password is too weak.");
+        }
       });
   };
 
   const login = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+    return new Promise(async (resolve, reject) => {
+      await signInWithEmailAndPassword(auth, email, password)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((e) => {
+          reject(e);
+        });
+    });
   };
 
   const logout = async () => {
