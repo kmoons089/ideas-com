@@ -87,18 +87,19 @@ export default function Post({ article, mode = "add", parent_email }) {
   const [owner, setOwner] = useState("");
 
   /* --------------------------------- delete --------------------------------- */
-  // const handleDelete = () => {
-  //   setBtnLoading(true);
-  //   FirestoreService.deleteReview(currentPostId)
-  //     .then(() => {
-  //       setBtnLoading(false);
+  const handleDelete = (currentPostId) => {
+    console.log("current post id : " + currentPostId);
+    setBtnLoading(true);
+    FirestoreServiceForPosts.deletePost(currentPostId)
+      .then(() => {
+        setBtnLoading(false);
 
-  //       window.location.reload(false);
-  //     })
-  //     .catch((e) => {
-  //       alert("Error occured: " + e.message);
-  //     });
-  // };
+        window.location.reload(false);
+      })
+      .catch((e) => {
+        alert("Error occured: " + e.message);
+      });
+  };
 
   /* ------------------------------- open modal ------------------------------- */
   // const handleModal = () => {
@@ -537,6 +538,68 @@ export default function Post({ article, mode = "add", parent_email }) {
         alignment="card border  shadow mb-3 mt-2"
         className="w-100 shadow rounded "
       >
+        {route.pathname === "/profile" && (
+          <>
+            <div
+              className="d-flex w-100 justify-content-end position-absolute "
+              style={{ zIndex: "2" }}
+            >
+              {/* <Button
+                  className="m-1"
+                  variant="primary"
+                  onClick={async () => {
+                    setCurrentPostId(
+                      article.doc.key.path.segments[
+                        article.doc.key.path.segments.length - 1
+                      ]
+                    );
+                    await setData({
+                      id: article.doc.key.path.segments[
+                        article.doc.key.path.segments.length - 1
+                      ],
+
+                      body: article.doc.data.value.mapValue.fields.body
+                        .stringValue,
+                      stars:
+                        article.doc.data.value.mapValue.fields.stars
+                          .stringValue,
+                      owner_email: auth.user.email,
+                    });
+
+                    handleModal();
+                  }}
+                >
+                  ✎ Edit
+                </Button> */}
+              <Button
+                className="d-flex align-items-center justify-content-center m-2"
+                variant="danger"
+                onClick={() => {
+                  handleDelete(
+                    article.doc.key.path.segments[
+                      article.doc.key.path.segments.length - 1
+                    ]
+                  );
+                }}
+                style={{ backgroundColor: "white", color: "#684d9d" }}
+              >
+                {btnLoading ? (
+                  <>
+                    <MDBSpinner
+                      size="sm"
+                      role="status"
+                      tag="span"
+                      className="me-2"
+                    />
+                    Loading...
+                  </>
+                ) : (
+                  <h6 className="mt-1">Delete</h6>
+                )}
+              </Button>
+            </div>
+          </>
+        )}
         <MDBCardHeader
           style={{ backgroundColor: "#684d9d" }}
           onClick={handleHeader}
@@ -636,8 +699,8 @@ export default function Post({ article, mode = "add", parent_email }) {
                 src={data.img}
                 alt=""
                 style={{
-                  width: "300px",
-                  height: "300px",
+                  width: "100%",
+                  height: "auto",
 
                   objectFit: "contain",
                 }}
@@ -646,60 +709,6 @@ export default function Post({ article, mode = "add", parent_email }) {
           )}
         </MDBCardBody>
         <MDBCardFooter>
-          {/* {mode == "edit" && parent_email == auth.user.email && (
-            <>
-              <div className="d-flex justify-content-md-end ">
-                <Button
-                  className="m-1"
-                  variant="primary"
-                  onClick={async () => {
-                    setCurrentPostId(
-                      article.doc.key.path.segments[
-                        article.doc.key.path.segments.length - 1
-                      ]
-                    );
-                    await setData({
-                      id: article.doc.key.path.segments[
-                        article.doc.key.path.segments.length - 1
-                      ],
-
-                      body: article.doc.data.value.mapValue.fields.body
-                        .stringValue,
-                      stars:
-                        article.doc.data.value.mapValue.fields.stars
-                          .stringValue,
-                      owner_email: auth.user.email,
-                    });
-
-                    handleModal();
-                  }}
-                >
-                  ✎ Edit
-                </Button>
-                <Button
-                  className="m-1"
-                  variant="danger"
-                  onClick={() => {
-                    handleDelete();
-                  }}
-                >
-                  {btnLoading ? (
-                    <>
-                      <MDBSpinner
-                        size="sm"
-                        role="status"
-                        tag="span"
-                        className="me-2"
-                      />
-                      Loading...
-                    </>
-                  ) : (
-                    <>x Delete</>
-                  )}
-                </Button>
-              </div>
-            </>
-          )} */}
           {mode == "add" && (
             <>
               <div className="d-flex w-100">

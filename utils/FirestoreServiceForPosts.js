@@ -129,7 +129,19 @@ export const addNewPost = (data, url) => {
 
 export const editPost = () => {};
 
-export const deletePost = () => {};
+export const deletePost = (postID) => {
+  return new Promise((resolve, reject) => {
+    db.collection("posts")
+      .doc(postID)
+      .delete()
+      .then(() => {
+        resolve();
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};
 
 export const getComment = (id) => {
   return new Promise((resolve, reject) => {

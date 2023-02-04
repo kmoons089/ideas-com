@@ -61,7 +61,7 @@ const CreateFbPost = () => {
         console.log("Successfully Post added");
         setSaveChangesBtn(false);
         handleModal();
-        route.push("/posts/categories/all");
+        route.reload();
       });
     } else {
       console.log("img uploading >>>");
@@ -78,7 +78,7 @@ const CreateFbPost = () => {
             console.log("Successfully Post added");
             setSaveChangesBtn(false);
             handleModal();
-            route.push("/posts/categories/all");
+            route.reload();
           });
         });
       });
