@@ -87,6 +87,54 @@ const About_2nd_para = () => {
             </Container>
           </Col>
         </Row>
+        <Row>
+          <Col className="d-flex justify-content-center align-items-center text-center">
+            <Container>
+              <h1 className="wow animate__animated animate__fadeInUp">
+                social media
+              </h1>
+              <p className="wow animate__animated animate__fadeInUp">
+                You can also use this website as social media website ,post your
+                project screenshot and post about your struggle doing your
+                project and post about your feeling
+              </p>
+            </Container>
+          </Col>
+          <Col className="d-flex justify-content-center align-items-center text-center">
+            <img
+              src="https://img.freepik.com/free-vector/modern-online-registration-compositio_23-2147993777.jpg"
+              className="wow animate__animated animate__fadeInUp w-75 h-auto  d-block"
+              alt=""
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col className="d-flex justify-content-center align-items-center text-center">
+            <img
+              src="https://png.pngtree.com/png-vector/20220925/ourmid/pngtree-a-man-explains-list-of-rule-guidelines-png-image_6212794.png"
+              className="wow animate__animated animate__fadeInUp w-75 h-auto  d-block"
+              alt=""
+            />
+          </Col>
+          <Col className="d-flex justify-content-center align-items-center text-start">
+            <Container>
+              <h1 className="wow animate__animated animate__fadeInUp">
+                Follow the rules
+              </h1>
+              <p className="wow animate__animated animate__fadeInUp">
+                Rule to follow when you Post
+                <ol type="1" className="">
+                  <li>In life , the most important is parents</li>
+                  <li> Dont forget to brush your teeth.</li>
+                  <li>Dont think about her.</li>
+                  <li>Wash your hands </li>
+                </ol>
+                If you dont follow the rules , we will ban your account next
+                year.
+              </p>
+            </Container>
+          </Col>
+        </Row>
       </Container>
     </>
   );

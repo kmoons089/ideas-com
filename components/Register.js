@@ -53,7 +53,7 @@ const Register = () => {
     }
     if (data.password.length < 8) {
       setPasswordError(true);
-      alert("Fill aleast 8 letters");
+      alert("Fill aleast 8 letters for password");
     } else {
       setPasswordError(false);
     }
@@ -85,6 +85,7 @@ const Register = () => {
         await FirestoreService.addProfileData(data)
           .then(console.log("Profile data added : "))
           .catch((error) => {
+            setLoading(false);
             return;
           })
           .finally(() => {
@@ -99,6 +100,7 @@ const Register = () => {
       //   );
       // }
       console.log(err);
+      setLoading(false);
     }
   };
 

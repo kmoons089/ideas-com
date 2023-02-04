@@ -187,15 +187,30 @@ const profile = () => {
                         objectFit: "cover",
                       }}
                     />
+                    {profileInfo.displayName === "" ? (
+                      <>
+                        <p className="placeholder-glow ">
+                          <span
+                            className="placeholder"
+                            style={{ width: "100px" }}
+                          ></span>
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <h2 className="text-center">
+                          {profileInfo.displayName}
+                        </h2>
+                      </>
+                    )}
 
-                    <h2 className="text-center">{profileInfo.displayName}</h2>
                     <p className="text-muted">{auth.user.email}</p>
                     <p>{profileInfo.bio}</p>
                   </div>
                   <div className="card w-100" style={{ border: "none" }}>
-                    <div className="d-flex w-100">
+                    <div className="d-flex w-100 px-5">
                       <div
-                        className="d-flex align-items-center justify-content-center w-50 h-100"
+                        className="d-flex align-items-center justify-content-center w-30 h-100"
                         style={{ cursor: "pointer" }}
                       >
                         <h6>
@@ -205,7 +220,17 @@ const profile = () => {
                       </div>
 
                       <div
-                        className="d-flex w-50 align-items-center justify-content-center "
+                        className="d-flex align-items-center justify-content-center w-30 h-100"
+                        style={{ cursor: "pointer" }}
+                      >
+                        <h6>
+                          Following :{" "}
+                          <span className="text-muted">coming soon</span>
+                        </h6>
+                      </div>
+
+                      <div
+                        className="d-flex w-30 align-items-center justify-content-center "
                         style={{ cursor: "pointer" }}
                       >
                         <h6>Posts : {postCount}</h6>

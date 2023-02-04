@@ -9,7 +9,7 @@ const about = () => {
   return (
     <div>
       <Meta title="About" />
-      <Carousel_Component />
+
       <About_2nd_para />
       <Footer />
     </div>

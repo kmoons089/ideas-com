@@ -9,13 +9,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ProfileCard from "./ProfileCard";
 import FirestoreService from "../utils/FirestoreService";
 import style1 from "../styles/ProfileCard.module.css";
+import { MDBSpinner } from "mdb-react-ui-kit";
 
 const Nav_Boot = () => {
   const { user, logout } = useAuth();
   const [sideBar, setSideBar] = useState(false);
   const router = useRouter();
   const [pfData, setPfData] = useState({
-    name: ". . .",
+    name: "",
     img: "https://freesvg.org/img/abstract-user-flat-4.png",
   });
   const [showProfileCard, setShowProfileCard] = useState(false);
@@ -109,7 +110,21 @@ const Nav_Boot = () => {
                       className="rounded-circle me-2 me-2 m-1 bg-light"
                       style={{ objectFit: "cover" }}
                     />
-                    <h5 className="text-light">{pfData.name}</h5>
+                    <h5 className="text-light">
+                      {pfData.name === "" ? (
+                        <>
+                          <MDBSpinner
+                            size="sm"
+                            role="status"
+                            tag="span"
+                            className="me-2"
+                          />
+                          Loading...
+                        </>
+                      ) : (
+                        <>{pfData.name}</>
+                      )}
+                    </h5>
                   </a>
                   <a className="p-2 rounded  ms-3 mt-1 d-flex align-items-center justify-content-center  hoverbutton">
                     <h5

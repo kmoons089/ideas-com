@@ -571,9 +571,8 @@ export default function Post({ article, mode = "add", parent_email }) {
                 >
                   ✎ Edit
                 </Button> */}
-              <Button
-                className="d-flex align-items-center justify-content-center m-2"
-                variant="danger"
+              <div
+                className=" btn d-flex align-items-center justify-content-center m-2 "
                 onClick={() => {
                   handleDelete(
                     article.doc.key.path.segments[
@@ -581,7 +580,11 @@ export default function Post({ article, mode = "add", parent_email }) {
                     ]
                   );
                 }}
-                style={{ backgroundColor: "white", color: "#684d9d" }}
+                style={{
+                  backgroundColor: "white",
+                  color: "#684d9d",
+                  border: "none",
+                }}
               >
                 {btnLoading ? (
                   <>
@@ -596,7 +599,7 @@ export default function Post({ article, mode = "add", parent_email }) {
                 ) : (
                   <h6 className="mt-1">Delete</h6>
                 )}
-              </Button>
+              </div>
             </div>
           </>
         )}
