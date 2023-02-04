@@ -121,9 +121,9 @@ const unknown_profile = () => {
                     className="card w-100 "
                     style={{ border: "none", marginBottom: "20px" }}
                   >
-                    <div className="d-flex w-100">
+                    <div className="d-flex w-100 px-5">
                       <div
-                        className="d-flex align-items-center justify-content-center w-50 h-100"
+                        className="d-flex align-items-center justify-content-center w-30 h-100"
                         style={{ cursor: "pointer" }}
                       >
                         <h6>
@@ -133,7 +133,17 @@ const unknown_profile = () => {
                       </div>
 
                       <div
-                        className="d-flex w-50 align-items-center justify-content-center "
+                        className="d-flex align-items-center justify-content-center w-30 h-100"
+                        style={{ cursor: "pointer" }}
+                      >
+                        <h6>
+                          Following :{" "}
+                          <span className="text-muted">coming soon</span>
+                        </h6>
+                      </div>
+
+                      <div
+                        className="d-flex w-30 align-items-center justify-content-center "
                         style={{ cursor: "pointer" }}
                       >
                         <h6>Posts : {postCount}</h6>
