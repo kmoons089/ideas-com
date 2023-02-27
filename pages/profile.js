@@ -13,6 +13,7 @@ import ProfileEditModal from "../components-posts/ProfileEditModal";
 import PostsArray from "../componentsForPost/PostsArray";
 import CreateFbPost from "../componentsForPost/CreateFbPost";
 import FirestoreServiceForPosts from "../utils/FirestoreServiceForPosts";
+import ChangePassword from "../componentsforpw/ChangePassword";
 
 const profile = () => {
   const route = useRouter();
@@ -58,6 +59,14 @@ const profile = () => {
   const handleProfileEditModal = () => {
     setShowProfileEditModal(!showProfileEditModal);
     setVaryingModal_forProfile(!varyingModal_forProfile);
+  };
+  /* ----------------------------- change Password ---------------------------- */
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+  const [varyingModal_forPw, setVaryingModal_forPw] = useState(false);
+  const handleChangePasswordModal = () => {
+    setShowChangePasswordModal(!showChangePasswordModal);
+    setVaryingModal_forPw(!varyingModal_forPw);
+    console.log("change password modal opened.");
   };
   /* ------------------------------- handlePost ------------------------------- */
   const handlePost = async () => {
@@ -128,6 +137,17 @@ const profile = () => {
             varyingModal_forProfile={varyingModal_forProfile}
             setVaryingModal_forProfile={setVaryingModal_forProfile}
             handleProfileEditModal={handleProfileEditModal}
+            profileId={profileId}
+            profileInfo={profileInfo}
+          />
+        </>
+      )}
+      {showChangePasswordModal && (
+        <>
+          <ChangePassword
+            varyingModal_forPw={varyingModal_forPw}
+            setVaryingModal_forPw={setVaryingModal_forPw}
+            handleChangePasswordModal={handleChangePasswordModal}
             profileId={profileId}
             profileInfo={profileInfo}
           />
@@ -245,6 +265,13 @@ const profile = () => {
                       onClick={handleProfileEditModal}
                     >
                       Edit Profile
+                    </div>
+                    <div
+                      className="btn  m-1 text-light"
+                      style={{ zIndex: "2", backgroundColor: "#684d9d" }}
+                      onClick={handleChangePasswordModal}
+                    >
+                      Change Password
                     </div>
                   </div>
                 </div>

@@ -16,8 +16,11 @@ const ProfileCard = ({ handleProfilesCard, name, img }) => {
                 img ? img : "https://freesvg.org/img/abstract-user-flat-4.png"
               }
               alt=""
-              width="100"
-              height="100"
+              style={{
+                width: "90px",
+                height: "90px",
+                objectFit: "cover",
+              }}
               className="rounded-circle "
             />
             <div className="card-body text-center">

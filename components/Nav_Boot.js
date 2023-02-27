@@ -32,6 +32,7 @@ const Nav_Boot = () => {
         return new Promise(async (resolve, reject) => {
           await FirestoreService.getProfileInfo(user.email)
             .then((response) => {
+              console.log(response);
               setPfData({
                 ...pfData,
                 name: response._delegate._snapshot.docChanges[0].doc.data.value

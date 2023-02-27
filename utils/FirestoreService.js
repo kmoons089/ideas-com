@@ -94,6 +94,8 @@ function updateProfileData(data, id, url) {
 }
 function getProfileInfo(email) {
   return new Promise((resolve, reject) => {
+    //const querySnapshot = await getDocs(collection(db, "users"));
+    //await getDocs(collection(db, "users"))
     db.collection("profiles")
       .where("owner_email", "==", email)
       .get()

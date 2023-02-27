@@ -8,6 +8,7 @@ import {
 } from "firebase/firestore";
 
 import { auth } from "./firestore";
+import { resolve } from "styled-jsx/css";
 
 let guid = () => {
   let s4 = () => {
@@ -222,6 +223,32 @@ export const AddLikes = (id, email) => {
       });
   });
 };
+export const getPassword = (email) => {
+  return new Promise((resolve, reject) => {
+    db.collection("profiles")
+      .where("owner_email", "==", email)
+      .get()
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};
+export const updatePassword = (id, newPassword) => {
+  return new Promise((resolve, reject) => {
+    db.collection("profiles")
+      .doc(id)
+      .update({ password: newPassword })
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};
 
 export default {
   getAllPosts,
@@ -235,4 +262,6 @@ export default {
   createComment,
   RemoveLikes,
   AddLikes,
+  getPassword,
+  updatePassword,
 };
