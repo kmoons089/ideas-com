@@ -77,7 +77,7 @@ const Footer = () => {
                 </p>
                 <p>
                   <a href="#!" className="text-reset">
-                    Win Mart
+                    Wint Maing
                   </a>
                 </p>
                 <p>

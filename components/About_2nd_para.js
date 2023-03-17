@@ -124,10 +124,13 @@ const About_2nd_para = () => {
               <p className="wow animate__animated animate__fadeInUp">
                 Rule to follow when you Post
                 <ol type="1" className="">
-                  <li>In life , the most important is parents</li>
-                  <li> Dont forget to brush your teeth.</li>
-                  <li>Dont think about her.</li>
-                  <li>Wash your hands </li>
+                  <li>Do not spread negativity.</li>
+                  <li>Do not post 18+ content.</li>
+                  <li>Do not post offensive post.</li>
+                  <li>
+                    Hate speech , credible threats or direct attacks on an
+                    individual or group.
+                  </li>
                 </ol>
                 If you dont follow the rules , we will ban your account next
                 year.
